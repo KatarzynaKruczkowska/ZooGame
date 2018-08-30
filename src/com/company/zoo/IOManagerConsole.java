@@ -13,6 +13,22 @@ public class IOManagerConsole implements IOManager {
         System.out.println(message);
     }
 
+    public int getAnimal(int currentNumberOfAnimals){
+        showMessage(Texts.CHOOSE_AN_ANIMAL); //co z 10?
+        int result = getNumber();
+        return result;
+    }
+
+    public int getMenu(){
+        showMessage(Texts.MENU);
+        showMessage(Texts.TAKE_DECISION);
+        showMessage("1 - " + Texts.LIST_OF_ANIMALS);
+        showMessage("2 - " + Texts.TRAINING);
+        showMessage("9 - " + Texts.EXIT);
+        int result = getNumber();
+        return result;
+    }
+
     @Override
     public boolean getDecision(final String message) {
         showMessage(message);
