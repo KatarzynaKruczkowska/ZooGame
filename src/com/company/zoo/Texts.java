@@ -6,7 +6,6 @@ public class Texts {
             "Z menu wybierz akcje które podejmiesz. " +
             "Możesz je karmić, iść z nimi na spacer albo tresować wydawanie dźwięków.\n " +
             "Każda akcja ma wpływ na Twoje zwierzęta. Początkowy stan ZOO jest wynikiem losowania.";
-    public static final String HELLO = "Witaj";
     public static final String DECISION_YES = "Tak";
     public static final String DECISION_NO = "Nie";
     public static final String TAKE_DECISION = "Proszę zdecyduj wybierając jedną z poniższych opcji";
@@ -18,7 +17,7 @@ public class Texts {
     public static final String WEIGHT = "Waga";
     public static final String PREGNANCY = "Ciąża";
     public static final String NUMBER_OF_ANIMALS = "Liczba zwierząt:";
-    public static final String MENU = "MENU czyli co możesz zrobić w swoim ZOO";
+    public static final String MENU = "MENU:";
     public static final String LIST_OF_ANIMALS = "Lista zwierząt w Zoo";
     public static final String TRAINING = "Tresura";
     public static final String EXIT = "Wyjście z gry";

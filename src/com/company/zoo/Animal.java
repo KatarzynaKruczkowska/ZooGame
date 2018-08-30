@@ -6,11 +6,11 @@ public class Animal {
     private final String name;
     private final int sex; //0 = famale, 1=male
     private int age; //age in years? days? rounds?
-    private double weight;
+    private float weight;
     private boolean pregnancy;
 
     public Animal(final int id, final String name,
-                  final int sex, int age, double weight, boolean pregnancy) {
+                  final int sex, int age, float weight, boolean pregnancy) {
         this.id = id;
         //this.animalType = animalType;
         this.name = name;
@@ -37,11 +37,11 @@ public class Animal {
         return age;
     }
 
-    public double getWeight() {
+    public float getWeight() {
         return weight;
     }
 
-    public boolean isPregnancy() {
+    public boolean isPregnant() {
         return pregnancy;
     }
 }

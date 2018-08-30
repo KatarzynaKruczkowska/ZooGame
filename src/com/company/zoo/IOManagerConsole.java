@@ -1,8 +1,8 @@
 package com.company.zoo;
 
-import com.company.zoo.IOManager;
-
 import java.util.Scanner;
+
+import static com.company.zoo.Texts.*;
 
 public class IOManagerConsole implements IOManager {
 
@@ -13,30 +13,26 @@ public class IOManagerConsole implements IOManager {
         System.out.println(message);
     }
 
-    public int getAnimal(int currentNumberOfAnimals){
-        showMessage(Texts.CHOOSE_AN_ANIMAL); //co z 10?
-        int result = getNumber();
-        return result;
+    public int getAnimal(int currentNumberOfAnimals) {
+        showMessage(CHOOSE_AN_ANIMAL); //co z 10?
+        return getNumber();
     }
 
-    public int getMenu(){
-        showMessage(Texts.MENU);
-        showMessage(Texts.TAKE_DECISION);
-        showMessage("1 - " + Texts.LIST_OF_ANIMALS);
-        showMessage("2 - " + Texts.TRAINING);
-        showMessage("9 - " + Texts.EXIT);
-        int result = getNumber();
-        return result;
+    public int getMenu() {
+        showMessage(MENU);
+        showMessage("1 - " + LIST_OF_ANIMALS);
+        showMessage("2 - " + TRAINING);
+        showMessage("9 - " + EXIT);
+        return getNumber();
     }
 
     @Override
     public boolean getDecision(final String message) {
         showMessage(message);
-        showMessage(Texts.TAKE_DECISION);
-        showMessage("1 - " + Texts.DECISION_YES);
-        showMessage("2 - " + Texts.DECISION_NO);
-        int result = getNumber();
-        return result == 1;
+        showMessage(TAKE_DECISION);
+        showMessage("1 - " + DECISION_YES);
+        showMessage("2 - " + DECISION_NO);
+        return getNumber() == 1;
     }
 
     private int getNumber() {
@@ -44,7 +40,7 @@ public class IOManagerConsole implements IOManager {
         try {
             result = Integer.parseInt(INPUT.nextLine());
         } catch (NumberFormatException error) {
-            showMessage(Texts.WRONG_FORMAT);
+            showMessage(WRONG_FORMAT);
         } catch (Exception error) {
             error.printStackTrace();
         }
