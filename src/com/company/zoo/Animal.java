@@ -1,23 +1,23 @@
 package com.company.zoo;
 
-public class Animal {
+public abstract class Animal {
     private final int id;
     //private final AnimalType animalType;
     private final String name;
-    private final int sex; //0 = famale, 1=male
+    private final SexType sex;
     private int age; //age in years? days? rounds?
     private float weight;
-    private boolean pregnancy;
+    private boolean pregnant;
 
     public Animal(final int id, final String name,
-                  final int sex, int age, float weight, boolean pregnancy) {
+                  final SexType sex, int age, float weight, boolean pregnant) {
         this.id = id;
         //this.animalType = animalType;
         this.name = name;
         this.sex = sex;
         this.age = age;
         this.weight = weight;
-        this.pregnancy = pregnancy;
+        this.pregnant = pregnant;
 
     }
 
@@ -29,7 +29,8 @@ public class Animal {
         return id;
     }
 
-    public int getSex() {
+    public SexType getSexType() {
+        //return SexType.valueOf(sex).printableSex;
         return sex;
     }
 
@@ -42,6 +43,6 @@ public class Animal {
     }
 
     public boolean isPregnant() {
-        return pregnancy;
+        return pregnant;
     }
 }

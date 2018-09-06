@@ -1,27 +1,26 @@
 package com.company.zoo;
 
-public enum AnimalType {
-    słoń(1, "Słoń afrykański", 4000, 70, "trututu"),
-    wąż(2, "Wąż Boa", 15, 40, "ssssssss"),
-    pies(3, "Pies", 10, 13, "hau hau"),
-    ryba(4, "Ryba Gupik", 0.10f, 3, "nie pogadasz z rybą"),
-    ośmiornica(5, "Ośmiornica olbrzymia", 15, 5, "plusk co najwyżej"),
-    bocian(6, "Bocian Biały", 4, 12, "kle kle"),
-    struś(7, "Struś czerwonoskóry", 120, 75, "normalnie nie wydaje dźwięków"),
-    tygrys(8, "Tygrys azjatycki", 90, 20, "groźny pomruk");
+import static com.company.zoo.Texts.*;
 
-    public final int index;
+public enum AnimalType {
+    ELEPHANT(ELEPHANT_NAME, 4000f, 110f, 70),
+    SNAKE(SNAKE_NAME, 10f, 0.5f, 30),
+    DOG(DOG_NAME, 10f, 0.5f, 13),
+    FISH(FISH_NAME, 0.1f, 0.01f, 3),
+    OCTOPUS(OCTOPUS_NAME, 15f, 0.5f, 5),
+    STORK(STORK_NAME, 4f, 0.2f, 12),
+    OSTRICH(OSTRICH_NAME, 120f, 1.5f, 40),
+    TIGER(TIGER_NAME, 90f, 1f, 20);
+
     public final String typeName;
     public final float maxWeight;
+    public final float minWeight;
     public final int maxAge;
-    public final String sound;
 
-
-    AnimalType(final int index, final String typeName, final float maxWeight, final int maxAge, final String sound) {
-        this.index = index;
+    AnimalType(final String typeName, final float maxWeihgt, final float minWeight, final int maxAge) {
         this.typeName = typeName;
-        this.maxWeight = maxWeight;
+        this.maxWeight = maxWeihgt;
+        this.minWeight = minWeight;
         this.maxAge = maxAge;
-        this.sound = sound;
     }
 }

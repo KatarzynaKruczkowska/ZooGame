@@ -13,16 +13,12 @@ public class GameManager {
     private final IOManager ioManager;
     private static final int MIN_NUMBER_OF_ANIMALS = 3;
     private static final int MAX_NUMBER_OF_ANIMALS = 10;
-    private static final int MIN_INDEX = 1;
-    private static final int MAX_INDEX = 8;
 
-    private static final String FORMATTED_LIST_OF_ANIMALS = "%d. %s " + SEX + " %d "
-            + AGE + " %d " + WEIGHT + " %.2f " + PREGNANCY + " %b";
+    private static final String FORMATTED_LIST_OF_ANIMALS = "%d. %s %s %s %s %d %s %.2f %s %b";
     private static final String FORMATTED_SHORT_LIST_OF_ANIMALS = "%d. %s";
 
     final Random random = new Random();
-    private List<Animal> myAnimals;
-    private int currentNumberOfAnimals = 0;
+    private List<Animal> animals;
 
     public GameManager(final IOManager ioManager) {
         this.ioManager = ioManager;
@@ -30,55 +26,91 @@ public class GameManager {
 
     public void play() {
         int startNumberOfAnimals = getRandomNumber(MIN_NUMBER_OF_ANIMALS, MAX_NUMBER_OF_ANIMALS);
-        //ioManager.showMessage(Texts.NUMBER_OF_ANIMALS + Integer.toString(startNumberOfAnimals));
-        myAnimals = initPopulation(startNumberOfAnimals);
-        //showListOfAnimals(currentNumberOfAnimals);
-        playGame(myAnimals, currentNumberOfAnimals);
+        ioManager.showMessage(Texts.NUMBER_OF_ANIMALS + Integer.toString(startNumberOfAnimals));
+
+        animals = initPopulation(startNumberOfAnimals);
+        showListOfAnimals();
+        playGame(animals);
         ioManager.showMessage(END_OF_THE_GAME);
     }
 
-    private void showListOfAnimals(int current_number_of_animals) {
-        ioManager.showMessage(NUMBER_OF_ANIMALS + Integer.toString(current_number_of_animals));
-        for (int i = 0; i < current_number_of_animals; i++) {
+    private void showListOfAnimals() {
+        ioManager.showMessage(NUMBER_OF_ANIMALS + Integer.toString(animals.size()));
+        for (int i = 0; i < animals.size(); i++) {
             ioManager.showMessage(format(FORMATTED_LIST_OF_ANIMALS, i + 1,
-                    myAnimals.get(i).getName(), myAnimals.get(i).getSex(), myAnimals.get(i).getAge(),
-                    myAnimals.get(i).getWeight(), myAnimals.get(i).isPregnant()));
+                    animals.get(i).getName(),
+                    SEX, animals.get(i).getSexType().printableSex,
+                    AGE, animals.get(i).getAge(),
+                    WEIGHT, animals.get(i).getWeight(),
+                    PREGNANT, animals.get(i).isPregnant()));
         }
     }
 
     private List<Animal> initPopulation(final int startNumberOfAnimals) {
         int index;
-        final List<Animal> myAnimals = new ArrayList<>(startNumberOfAnimals);
+        final List<Animal> animals = new ArrayList<>(startNumberOfAnimals);
 
         for (int i = 0; i < startNumberOfAnimals; i++) {
-            index = getRandomNumber(0, AnimalType.values().length);
-            final AnimalType animalType = AnimalType.values()[index];
-            //ioManager.showMessage("From List of Types: " + source.get(index-1));
-            final int sex = getRandomNumber(0, 1);
+            index = getRandomNumber(1, AnimalType.values().length) - 1; //1-8 => -1 daje 0-7
+            final AnimalType animalType = AnimalType.values()[index];   //0-7
+            //final SexType sex = new SexType.valueOf(getRandomNumber(0, 1));
+            final SexType sex = getRandomSex();
             final int age = getRandomNumber(1, animalType.maxAge);
-            final float weight = getRandomWeight(0, animalType.maxWeight);
-            myAnimals.add(new Animal(index, animalType.typeName, sex, age, weight, false));
-            currentNumberOfAnimals += 1;
+            final float weight = getRandomWeight(animalType.minWeight, animalType.maxWeight);
+            switch (index) {
+                case 0:
+                    animals.add(new Elephant(index, animalType.typeName, sex, age, weight, false));
+                    break;
+                case 1:
+                    animals.add(new Snake(index, animalType.typeName, sex, age, weight, false));
+                    break;
+                case 2:
+                    animals.add(new Dog(index, animalType.typeName, sex, age, weight, false));
+                    break;
+                case 3:
+                    animals.add(new Fish(index, animalType.typeName, sex, age, weight, false));
+                    break;
+                case 4:
+                    animals.add(new Octopus(index, animalType.typeName, sex, age, weight, false));
+                    break;
+                case 5:
+                    animals.add(new Stork(index, animalType.typeName, sex, age, weight, false));
+                    break;
+                case 6:
+                    animals.add(new Ostrich(index, animalType.typeName, sex, age, weight, false));
+                    break;
+                case 7:
+                    animals.add(new Tiger(index, animalType.typeName, sex, age, weight, false));
+                    break;
+            }
         }
-        return myAnimals;
+        return animals;
+    }
+
+    private SexType getRandomSex() {
+        final int result = getRandomNumber(0, 1);
+        if (result == 0) {
+            return SexType.FEMALE;
+        }
+        return SexType.MALE;
     }
 
     private int getRandomNumber(final int min, final int max) {
-        return random.nextInt(max) + min;
+        return random.nextInt(max + 1 - min) + min; //tak musi być żeby zakres był zachowany
     }
 
     private float getRandomWeight(final float min, final float max) {
-        return random.nextFloat() * max + min;
+        return random.nextFloat() * (max - min) + min; //nigdy nie będzie max, min bedzie zachowane
     }
 
-    private void playGame(List<Animal> myAnimals, int currentNumberOfAnimals) {
+    private void playGame(List<Animal> animals) {
         do {
-            switch (ioManager.getMenu()) {
+            switch (ioManager.chooseFromMenu()) {
                 case 1:
-                    showListOfAnimals(currentNumberOfAnimals);
+                    showListOfAnimals();
                     break;
                 case 2:
-                    training(myAnimals, currentNumberOfAnimals);
+                    training();
                     break;
                 case 9:
                     return;
@@ -86,15 +118,16 @@ public class GameManager {
         } while (true);
     }
 
-    private void training(List<Animal> myAnimals, int currentNumberOfAnimals) {
+    private void training() {
         final List<AnimalType> source = new ArrayList<>(Arrays.asList(AnimalType.values()));
-        showListOfAnimals(currentNumberOfAnimals);
-        int index = ioManager.getAnimal(currentNumberOfAnimals);
+        showListOfAnimals();
+        int index = ioManager.chooseAnimal(animals.size());
         ioManager.showMessage(format(FORMATTED_SHORT_LIST_OF_ANIMALS, index,
-                myAnimals.get(index - 1).getName()));
+                animals.get(index - 1).getName()));
         ioManager.showMessage(SOUND);
-        //int sourceid = myAnimals.get(index-1).getId();
-        ioManager.showMessage(source.get(myAnimals.get(index - 1).getId() - 1).sound);
+        //int sourceid = animals.get(index-1).getId();
+        ioManager.showMessage("???? jak się dostać do pola sound w klasie podrzędnej? Elephant.sound nie działa! ???? ");
         //ioManager.showMessage(source.get(sourceid-1).sound);
+
     }
 }

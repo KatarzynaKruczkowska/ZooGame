@@ -6,7 +6,7 @@ public interface IOManager {
 
     public boolean getDecision(final String message);
 
-    public int getMenu();
+    public int chooseFromMenu();
 
-    public int getAnimal(int currentNumberOfAnimals);
+    public int chooseAnimal(int max);
 }
