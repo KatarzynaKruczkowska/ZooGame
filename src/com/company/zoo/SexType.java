@@ -1,7 +1,5 @@
 package com.company.zoo;
 
-import static com.company.zoo.Texts.*;
-
 public enum SexType {
     FEMALE(Texts.FEMALE, 0),
     MALE(Texts.MALE, 1);

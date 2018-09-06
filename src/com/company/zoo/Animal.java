@@ -45,4 +45,6 @@ public abstract class Animal {
     public boolean isPregnant() {
         return pregnant;
     }
+
+    public abstract String getSound();
 }

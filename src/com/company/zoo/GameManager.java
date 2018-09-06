@@ -37,12 +37,13 @@ public class GameManager {
     private void showListOfAnimals() {
         ioManager.showMessage(NUMBER_OF_ANIMALS + Integer.toString(animals.size()));
         for (int i = 0; i < animals.size(); i++) {
+            Animal animal = animals.get(i);
             ioManager.showMessage(format(FORMATTED_LIST_OF_ANIMALS, i + 1,
-                    animals.get(i).getName(),
-                    SEX, animals.get(i).getSexType().printableSex,
-                    AGE, animals.get(i).getAge(),
-                    WEIGHT, animals.get(i).getWeight(),
-                    PREGNANT, animals.get(i).isPregnant()));
+                    animal.getName(),
+                    SEX, animal.getSexType().printableSex,
+                    AGE, animal.getAge(),
+                    WEIGHT, animal.getWeight(),
+                    PREGNANT, animal.isPregnant()));
         }
     }
 
@@ -88,11 +89,7 @@ public class GameManager {
     }
 
     private SexType getRandomSex() {
-        final int result = getRandomNumber(0, 1);
-        if (result == 0) {
-            return SexType.FEMALE;
-        }
-        return SexType.MALE;
+        return SexType.values()[random.nextInt(SexType.values().length)];
     }
 
     private int getRandomNumber(final int min, final int max) {
@@ -126,8 +123,13 @@ public class GameManager {
                 animals.get(index - 1).getName()));
         ioManager.showMessage(SOUND);
         //int sourceid = animals.get(index-1).getId();
-        ioManager.showMessage("???? jak się dostać do pola sound w klasie podrzędnej? Elephant.sound nie działa! ???? ");
+        ioManager.showMessage(animals.get(index - 1).getSound());
         //ioManager.showMessage(source.get(sourceid-1).sound);
+        final Animal octopus = new Octopus(index, "Octopuusss", SexType.MALE, 2, 0.5f, false);
+
+        if(octopus instanceof Octopus) {
+            ((Octopus) octopus).getTentaclesAmount();
+        }
 
     }
 }
