@@ -3,10 +3,12 @@ package com.company.zoo;
 import java.util.Scanner;
 
 import static com.company.zoo.Texts.*;
+import static java.lang.String.format;
 
 public class IOManagerConsole implements IOManager {
 
     private final Scanner INPUT = new Scanner(System.in);
+    private static final String FORMATTED_MENU = "%d. %s";
 
     @Override
     public void showMessage(final String message) {
@@ -18,15 +20,16 @@ public class IOManagerConsole implements IOManager {
         int result = 0;
         do {
             result = getNumber();
-        }while (result < 1 || result > max);
+        } while (result < 1 || result > max);
         return result;
     }
 
     public int chooseFromMenu() {
         showMessage(MENU);
-        showMessage("1 - " + LIST_OF_ANIMALS);
-        showMessage("2 - " + TRAINING);
-        showMessage("9 - " + EXIT);
+        final int index = MenuType.values().length;
+        for (int i = 0; i < index; i++) {
+            showMessage(format(FORMATTED_MENU, i + 1, MenuType.values()[i].printableMenu));
+        }
         return getNumber();
     }
 

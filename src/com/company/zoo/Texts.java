@@ -20,7 +20,7 @@ public class Texts {
     public static final String MENU = "MENU:";
     public static final String LIST_OF_ANIMALS = "Lista zwierząt w Zoo";
     public static final String TRAINING = "Tresura";
-    public static final String EXIT = "Wyjście z gry";
+    public static final String EXIT = "Wyjście";
     public static final String CHOOSE_AN_ANIMAL = "Wybierz zwierzę podając jego numer";
     public static final String SOUND = "To zwierzę wydaje dźwięk:";
     public static final String FEMALE = "samica";

@@ -1,14 +1,12 @@
 package com.company.zoo;
 
 public enum SexType {
-    FEMALE(Texts.FEMALE, 0),
-    MALE(Texts.MALE, 1);
+    FEMALE(Texts.FEMALE),
+    MALE(Texts.MALE);
 
     public final String printableSex;
-    public final int intValueSex;
 
-    SexType(final String printableSex, final int intValueSex) {
+    SexType(final String printableSex) {
         this.printableSex = printableSex;
-        this.intValueSex = intValueSex;
     }
 }

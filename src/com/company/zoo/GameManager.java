@@ -1,9 +1,6 @@
 package com.company.zoo;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 import static com.company.zoo.Texts.*;
 import static java.lang.String.format;
@@ -14,7 +11,7 @@ public class GameManager {
     private static final int MIN_NUMBER_OF_ANIMALS = 3;
     private static final int MAX_NUMBER_OF_ANIMALS = 10;
 
-    private static final String FORMATTED_LIST_OF_ANIMALS = "%d. %s %s %s %s %d %s %.2f %s %b";
+    private static final String FORMATTED_LIST_OF_ANIMALS = "%d. %-25s %s %-8s %s %3d %s %10.2f %s %b";
     private static final String FORMATTED_SHORT_LIST_OF_ANIMALS = "%d. %s";
 
     final Random random = new Random();
@@ -26,7 +23,6 @@ public class GameManager {
 
     public void play() {
         int startNumberOfAnimals = getRandomNumber(MIN_NUMBER_OF_ANIMALS, MAX_NUMBER_OF_ANIMALS);
-        ioManager.showMessage(Texts.NUMBER_OF_ANIMALS + Integer.toString(startNumberOfAnimals));
 
         animals = initPopulation(startNumberOfAnimals);
         showListOfAnimals();
@@ -54,7 +50,7 @@ public class GameManager {
         for (int i = 0; i < startNumberOfAnimals; i++) {
             index = getRandomNumber(1, AnimalType.values().length) - 1; //1-8 => -1 daje 0-7
             final AnimalType animalType = AnimalType.values()[index];   //0-7
-            //final SexType sex = new SexType.valueOf(getRandomNumber(0, 1));
+            //final int sex = random.nextInt(SexType.values().length); //to byłby int a potrzebny jest SexType
             final SexType sex = getRandomSex();
             final int age = getRandomNumber(1, animalType.maxAge);
             final float weight = getRandomWeight(animalType.minWeight, animalType.maxWeight);
@@ -109,27 +105,21 @@ public class GameManager {
                 case 2:
                     training();
                     break;
-                case 9:
+                case 3:
                     return;
+                //default:
+                //    throw new IllegalArgumentException(WRONG_FORMAT);
             }
         } while (true);
     }
 
     private void training() {
-        final List<AnimalType> source = new ArrayList<>(Arrays.asList(AnimalType.values()));
         showListOfAnimals();
         int index = ioManager.chooseAnimal(animals.size());
         ioManager.showMessage(format(FORMATTED_SHORT_LIST_OF_ANIMALS, index,
                 animals.get(index - 1).getName()));
         ioManager.showMessage(SOUND);
-        //int sourceid = animals.get(index-1).getId();
         ioManager.showMessage(animals.get(index - 1).getSound());
-        //ioManager.showMessage(source.get(sourceid-1).sound);
-        final Animal octopus = new Octopus(index, "Octopuusss", SexType.MALE, 2, 0.5f, false);
-
-        if(octopus instanceof Octopus) {
-            ((Octopus) octopus).getTentaclesAmount();
-        }
 
     }
 }
