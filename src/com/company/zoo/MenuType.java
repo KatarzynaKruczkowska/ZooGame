@@ -8,9 +8,9 @@ public enum MenuType {
     TRAINING(Texts.TRAINING),   //czy zmienić nazwę stałej tekstowej? Żeby nie była taka sama
     EXIT(Texts.EXIT);
 
-    public final String printableMenu;
+    public final String menuOptionName;
 
-    MenuType(final String printableMenu) {
-        this.printableMenu = printableMenu;
+    MenuType(final String menuOptionName) {
+        this.menuOptionName = menuOptionName;
     }
 }

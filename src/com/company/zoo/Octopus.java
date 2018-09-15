@@ -4,10 +4,15 @@ import static com.company.zoo.Texts.OCTOPUS_SOUND;
 
 public class Octopus extends Animal {
 
-    private final int tentaclesAmount = 8;
+    private int tentaclesAmount = 8;
 
-    public Octopus(int id, String name, SexType sex, int age, float weight, boolean pregnant) {
-        super(id, name, sex, age, weight, pregnant);
+    public Octopus(final AnimalType animalType, final SexType sex, final int age, final float weight, final boolean pregnant) {
+        super(animalType, sex, age, weight, pregnant);
+    }
+
+    public Octopus(final AnimalType animalType, final SexType sex, final int age, final float weight, final boolean pregnant, final int tentaclesAmount) {
+        super(animalType, sex, age, weight, pregnant);
+        this.tentaclesAmount = tentaclesAmount;
     }
 
     @Override

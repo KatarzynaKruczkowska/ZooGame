@@ -1,7 +1,10 @@
 package com.company.zoo;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
+import static com.company.zoo.AnimalType.OCTOPUS;
 import static com.company.zoo.Texts.*;
 import static java.lang.String.format;
 
@@ -33,52 +36,28 @@ public class GameManager {
     private void showListOfAnimals() {
         ioManager.showMessage(NUMBER_OF_ANIMALS + Integer.toString(animals.size()));
         for (int i = 0; i < animals.size(); i++) {
-            Animal animal = animals.get(i);
-            ioManager.showMessage(format(FORMATTED_LIST_OF_ANIMALS, i + 1,
-                    animal.getName(),
-                    SEX, animal.getSexType().printableSex,
-                    AGE, animal.getAge(),
-                    WEIGHT, animal.getWeight(),
-                    PREGNANT, animal.isPregnant()));
+//            Animal animal = animals.get(i);
+            ioManager.showMessage(animals.get(i).toString());
+//            ioManager.showMessage(format(FORMATTED_LIST_OF_ANIMALS, i + 1,
+//                    animal.getName(),
+//                    SEX, animal.getSexType().printableSex,
+//                    AGE, animal.getAge(),
+//                    WEIGHT, animal.getWeight(),
+//                    PREGNANT, animal.isPregnant()));
         }
     }
 
     private List<Animal> initPopulation(final int startNumberOfAnimals) {
-        int index;
         final List<Animal> animals = new ArrayList<>(startNumberOfAnimals);
 
         for (int i = 0; i < startNumberOfAnimals; i++) {
-            index = getRandomNumber(1, AnimalType.values().length) - 1; //1-8 => -1 daje 0-7
-            final AnimalType animalType = AnimalType.values()[index];   //0-7
-            //final int sex = random.nextInt(SexType.values().length); //to byłby int a potrzebny jest SexType
-            final SexType sex = getRandomSex();
+            final AnimalType animalType = AnimalType.values()[getRandomNumber(1, AnimalType.values().length) - 1];   //0-7
             final int age = getRandomNumber(1, animalType.maxAge);
             final float weight = getRandomWeight(animalType.minWeight, animalType.maxWeight);
-            switch (index) {
-                case 0:
-                    animals.add(new Elephant(index, animalType.typeName, sex, age, weight, false));
-                    break;
-                case 1:
-                    animals.add(new Snake(index, animalType.typeName, sex, age, weight, false));
-                    break;
-                case 2:
-                    animals.add(new Dog(index, animalType.typeName, sex, age, weight, false));
-                    break;
-                case 3:
-                    animals.add(new Fish(index, animalType.typeName, sex, age, weight, false));
-                    break;
-                case 4:
-                    animals.add(new Octopus(index, animalType.typeName, sex, age, weight, false));
-                    break;
-                case 5:
-                    animals.add(new Stork(index, animalType.typeName, sex, age, weight, false));
-                    break;
-                case 6:
-                    animals.add(new Ostrich(index, animalType.typeName, sex, age, weight, false));
-                    break;
-                case 7:
-                    animals.add(new Tiger(index, animalType.typeName, sex, age, weight, false));
-                    break;
+            if (animalType == OCTOPUS) {
+                animals.add(new Octopus(OCTOPUS, getRandomSex(), age, weight, false, 10));
+            } else {
+                animals.add(animalType.getNewAnimal(getRandomSex(), age, weight, false));
             }
         }
         return animals;
@@ -99,13 +78,13 @@ public class GameManager {
     private void playGame(List<Animal> animals) {
         do {
             switch (ioManager.chooseFromMenu()) {
-                case 1:
+                case LIST:
                     showListOfAnimals();
                     break;
-                case 2:
+                case TRAINING:
                     training();
                     break;
-                case 3:
+                case EXIT:
                     return;
                 //default:
                 //    throw new IllegalArgumentException(WRONG_FORMAT);

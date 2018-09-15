@@ -24,13 +24,17 @@ public class IOManagerConsole implements IOManager {
         return result;
     }
 
-    public int chooseFromMenu() {
+    public MenuType chooseFromMenu() {
         showMessage(MENU);
+
+//        for (MenuType menuType : MenuType.values()) {
+//            showMessage(format(FORMATTED_MENU, menuType.ordinal() + 1, menuType.menuOptionName));
+//        }
         final int index = MenuType.values().length;
         for (int i = 0; i < index; i++) {
-            showMessage(format(FORMATTED_MENU, i + 1, MenuType.values()[i].printableMenu));
+            showMessage(format(FORMATTED_MENU, i + 1, MenuType.values()[i].menuOptionName));
         }
-        return getNumber();
+        return MenuType.values()[getNumber() - 1];
     }
 
     @Override

@@ -1,32 +1,22 @@
 package com.company.zoo;
 
 public abstract class Animal {
-    private final int id;
-    //private final AnimalType animalType;
-    private final String name;
+    private final AnimalType animalType;
     private final SexType sex;
     private int age; //age in years? days? rounds?
     private float weight;
     private boolean pregnant;
 
-    public Animal(final int id, final String name,
-                  final SexType sex, int age, float weight, boolean pregnant) {
-        this.id = id;
-        //this.animalType = animalType;
-        this.name = name;
+    public Animal(final AnimalType animalType, SexType sex, int age, float weight, boolean pregnant) {
+        this.animalType = animalType;
         this.sex = sex;
         this.age = age;
         this.weight = weight;
         this.pregnant = pregnant;
-
     }
 
     public String getName() {
-        return name;
-    }
-
-    public int getId() {
-        return id;
+        return animalType.typeName;
     }
 
     public SexType getSexType() {
@@ -47,4 +37,9 @@ public abstract class Animal {
     }
 
     public abstract String getSound();
+
+    @Override
+    public String toString() {
+        return "O ja!";
+    }
 }
