@@ -4,9 +4,10 @@ import static com.company.zoo.Texts.*;
 
 public enum MenuType {
 
-    LIST(LIST_OF_ANIMALS),
-    TRAINING(Texts.TRAINING),   //czy zmienić nazwę stałej tekstowej? Żeby nie była taka sama
-    EXIT(Texts.EXIT);
+    LIST_OF_ANIMALS(LIST_OF_ANIMALS_TXT),
+    TRAINING(TRAINING_TXT),
+    SORTING(SORTING_TXT),
+    EXIT(EXIT_TXT);
 
     public final String menuOptionName;
 

@@ -8,5 +8,7 @@ public interface IOManager {
 
     public MenuType chooseFromMenu();
 
+    public SortMenuType chooseFromSortByMenu();
+
     public int chooseAnimal(int max);
 }

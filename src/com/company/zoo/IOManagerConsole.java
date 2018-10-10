@@ -9,6 +9,7 @@ public class IOManagerConsole implements IOManager {
 
     private final Scanner INPUT = new Scanner(System.in);
     private static final String FORMATTED_MENU = "%d. %s";
+    private static final String FORMATTED_YES_NO = "%d. %s";
 
     @Override
     public void showMessage(final String message) {
@@ -26,23 +27,35 @@ public class IOManagerConsole implements IOManager {
 
     public MenuType chooseFromMenu() {
         showMessage(MENU);
-
-//        for (MenuType menuType : MenuType.values()) {
-//            showMessage(format(FORMATTED_MENU, menuType.ordinal() + 1, menuType.menuOptionName));
-//        }
-        final int index = MenuType.values().length;
-        for (int i = 0; i < index; i++) {
-            showMessage(format(FORMATTED_MENU, i + 1, MenuType.values()[i].menuOptionName));
+        for (MenuType menuType : MenuType.values()) {
+            showMessage(format(FORMATTED_MENU, menuType.ordinal() + 1, menuType.menuOptionName));
         }
-        return MenuType.values()[getNumber() - 1];
+        int result = 0;
+        do {
+            result = getNumber();
+        } while (result < 1 || result > MenuType.values().length);
+        return MenuType.values()[result - 1];
+    }
+
+    public SortMenuType chooseFromSortByMenu() {
+        showMessage(MENU);
+        for (SortMenuType sortMenuType : SortMenuType.values()) {
+            showMessage(format(FORMATTED_MENU, sortMenuType.ordinal() + 1, sortMenuType.menuSortByName));
+        }
+        int result = 0;
+        do {
+            result = getNumber();
+        } while (result < 1 || result > MenuType.values().length);
+        return SortMenuType.values()[result - 1];
     }
 
     @Override
     public boolean getDecision(final String message) {
         showMessage(message);
         showMessage(TAKE_DECISION);
-        showMessage("1 - " + DECISION_YES);
-        showMessage("2 - " + DECISION_NO);
+        for (YesNoType yesNoType : YesNoType.values()) {
+            showMessage(format(FORMATTED_YES_NO, yesNoType.ordinal() + 1, yesNoType.yesNoTekst));
+        }
         return getNumber() == 1;
     }
 

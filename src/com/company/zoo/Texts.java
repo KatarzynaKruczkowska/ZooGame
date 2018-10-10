@@ -6,8 +6,8 @@ public class Texts {
             "Z menu wybierz akcje które podejmiesz. " +
             "Możesz je karmić, iść z nimi na spacer albo tresować wydawanie dźwięków.\n " +
             "Każda akcja ma wpływ na Twoje zwierzęta. Początkowy stan ZOO jest wynikiem losowania.";
-    public static final String DECISION_YES = "Tak";
-    public static final String DECISION_NO = "Nie";
+    public static final String YES_TXT = "Tak";
+    public static final String NO_TXT = "Nie";
     public static final String TAKE_DECISION = "Proszę zdecyduj wybierając jedną z poniższych opcji";
     public static final String WRONG_FORMAT = "Wprowadzono wartość w złym formacie";
     public static final String END_OF_THE_GAME = "Koniec rozgrywki";
@@ -18,9 +18,9 @@ public class Texts {
     public static final String PREGNANT = "Ciąża";
     public static final String NUMBER_OF_ANIMALS = "Liczba zwierząt:";
     public static final String MENU = "MENU:";
-    public static final String LIST_OF_ANIMALS = "Lista zwierząt w Zoo";
-    public static final String TRAINING = "Tresura";
-    public static final String EXIT = "Wyjście";
+    public static final String LIST_OF_ANIMALS_TXT = "Lista zwierząt w Zoo";
+    public static final String TRAINING_TXT = "Tresura";
+    public static final String EXIT_TXT = "Wyjście";
     public static final String CHOOSE_AN_ANIMAL = "Wybierz zwierzę podając jego numer";
     public static final String SOUND = "To zwierzę wydaje dźwięk:";
     public static final String FEMALE = "samica";
@@ -42,4 +42,10 @@ public class Texts {
     public static final String STORK_NAME = "Bocian Biały";
     public static final String OSTRICH_NAME = "Struś czerwonoskóry";
     public static final String TIGER_NAME = "Tygrys azjatycki";
+    public static final String SORTING_TXT = "Sortowanie listy zwierząt po wybranym polu";
+    public static final String SORT_BY_ID_AND_NAME_TXT = "Sortowanie po id (i po nazwie zarazem)";
+    public static final String SORT_BY_SEX_TXT = "Sortowanie według płci";
+    public static final String SORT_BY_AGE_TXT = "Sortowanie według wieku";
+    public static final String SORT_BY_WEIGHT_TXT = "Sortowanie według wagi";
+    public static final String SORT_BY_PREGNANT_TXT = "Sortowanie po polu ciąża";
 }

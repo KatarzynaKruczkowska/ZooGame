@@ -1,6 +1,7 @@
 package com.company.zoo;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -14,8 +15,7 @@ public class GameManager {
     private static final int MIN_NUMBER_OF_ANIMALS = 3;
     private static final int MAX_NUMBER_OF_ANIMALS = 10;
 
-    private static final String FORMATTED_LIST_OF_ANIMALS = "%d. %-25s %s %-8s %s %3d %s %10.2f %s %b";
-    private static final String FORMATTED_SHORT_LIST_OF_ANIMALS = "%d. %s";
+    private static final String FORMATTED_SHORT_LIST_OF_ANIMALS = "%2d. %s";
 
     final Random random = new Random();
     private List<Animal> animals;
@@ -36,14 +36,7 @@ public class GameManager {
     private void showListOfAnimals() {
         ioManager.showMessage(NUMBER_OF_ANIMALS + Integer.toString(animals.size()));
         for (int i = 0; i < animals.size(); i++) {
-//            Animal animal = animals.get(i);
-            ioManager.showMessage(animals.get(i).toString());
-//            ioManager.showMessage(format(FORMATTED_LIST_OF_ANIMALS, i + 1,
-//                    animal.getName(),
-//                    SEX, animal.getSexType().printableSex,
-//                    AGE, animal.getAge(),
-//                    WEIGHT, animal.getWeight(),
-//                    PREGNANT, animal.isPregnant()));
+            ioManager.showMessage(i + 1 + " " + animals.get(i).toString());
         }
     }
 
@@ -54,10 +47,16 @@ public class GameManager {
             final AnimalType animalType = AnimalType.values()[getRandomNumber(1, AnimalType.values().length) - 1];   //0-7
             final int age = getRandomNumber(1, animalType.maxAge);
             final float weight = getRandomWeight(animalType.minWeight, animalType.maxWeight);
+            final SexType sex = getRandomSex();
+            boolean pregnant = false;
+            if (sex == SexType.FEMALE) {
+                pregnant = getRandomPregnant();
+            }
+
             if (animalType == OCTOPUS) {
-                animals.add(new Octopus(OCTOPUS, getRandomSex(), age, weight, false, 10));
+                animals.add(new Octopus(OCTOPUS, sex, age, weight, pregnant, 10));
             } else {
-                animals.add(animalType.getNewAnimal(getRandomSex(), age, weight, false));
+                animals.add(animalType.getNewAnimal(sex, age, weight, pregnant));
             }
         }
         return animals;
@@ -75,19 +74,55 @@ public class GameManager {
         return random.nextFloat() * (max - min) + min; //nigdy nie będzie max, min bedzie zachowane
     }
 
+    private boolean getRandomPregnant() {
+        return random.nextBoolean();
+    }
+
     private void playGame(List<Animal> animals) {
         do {
             switch (ioManager.chooseFromMenu()) {
-                case LIST:
+                case LIST_OF_ANIMALS:
                     showListOfAnimals();
                     break;
                 case TRAINING:
                     training();
                     break;
+                case SORTING:
+                    sorting();
+
+                    break;
                 case EXIT:
                     return;
-                //default:
-                //    throw new IllegalArgumentException(WRONG_FORMAT);
+            }
+        } while (true);
+    }
+
+    private void sorting() {
+
+        do {
+            switch (ioManager.chooseFromSortByMenu()) {
+                case SORT_BY_ID_AND_NAME:
+                    Collections.sort(animals);
+                    showListOfAnimals();
+                    break;
+                case SORT_BY_SEX:
+                    //Collections.sort(animals, sex);
+                    //showListOfAnimals();
+                    break;
+                case SORT_BY_AGE:
+                    Collections.sort(animals, age);
+                    showListOfAnimals();
+                    break;
+                case SORT_BY_WEIGHT:
+                    Collections.sort(animals, weight);
+                    showListOfAnimals();
+                    break;
+                case SORT_BY_PREGNANT:
+                    Collections.sort(animals, pregnant);
+                    showListOfAnimals();
+                    break;
+                case EXIT:
+                    return;
             }
         } while (true);
     }
