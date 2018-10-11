@@ -45,7 +45,7 @@ public class IOManagerConsole implements IOManager {
         int result = 0;
         do {
             result = getNumber();
-        } while (result < 1 || result > MenuType.values().length);
+        } while (result < 1 || result > SortMenuType.values().length);
         return SortMenuType.values()[result - 1];
     }
 
