@@ -42,8 +42,10 @@ public class Texts {
     public static final String STORK_NAME = "Bocian Biały";
     public static final String OSTRICH_NAME = "Struś czerwonoskóry";
     public static final String TIGER_NAME = "Tygrys azjatycki";
-    public static final String SORTING_TXT = "Sortowanie listy zwierząt po wybranym polu";
-    public static final String SORT_BY_ID_AND_NAME_TXT = "Sortowanie po id (i po nazwie zarazem)";
+    public static final String SORTING_BY_ENUM_TXT = "Sortowanie przez funkcję pod ENUMem";
+    public static final String SORTING_BY_COMPARATOR_TXT = "Sortowanie przez użycie komparatora innego dla każdego pola";
+    public static final String SORTING_BY_VARIABLE_TXT = "Sortowanie przez zastosowanie zmiennej opisującej pole sortowania";
+    public static final String SORT_BY_NAME_TXT = "Sortowanie po nazwie";
     public static final String SORT_BY_SEX_TXT = "Sortowanie według płci";
     public static final String SORT_BY_AGE_TXT = "Sortowanie według wieku";
     public static final String SORT_BY_WEIGHT_TXT = "Sortowanie według wagi";

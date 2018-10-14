@@ -40,7 +40,7 @@ public class IOManagerConsole implements IOManager {
     public SortMenuType chooseFromSortByMenu() {
         showMessage(MENU);
         for (SortMenuType sortMenuType : SortMenuType.values()) {
-            showMessage(format(FORMATTED_MENU, sortMenuType.ordinal() + 1, sortMenuType.menuSortByName));
+            showMessage(format(FORMATTED_MENU, sortMenuType.ordinal() + 1, sortMenuType.menuSortBy));
         }
         int result = 0;
         do {
@@ -54,7 +54,7 @@ public class IOManagerConsole implements IOManager {
         showMessage(message);
         showMessage(TAKE_DECISION);
         for (YesNoType yesNoType : YesNoType.values()) {
-            showMessage(format(FORMATTED_YES_NO, yesNoType.ordinal() + 1, yesNoType.yesNoTekst));
+            showMessage(format(FORMATTED_YES_NO, yesNoType.ordinal() + 1, yesNoType.yesNoText));
         }
         return getNumber() == 1;
     }

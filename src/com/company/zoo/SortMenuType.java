@@ -5,7 +5,7 @@ import java.util.Comparator;
 import static com.company.zoo.Texts.*;
 
 public enum SortMenuType implements Comparator<Animal> {
-    SORT_BY_ID_AND_NAME(SORT_BY_ID_AND_NAME_TXT) {
+    SORT_BY_NAME(SORT_BY_NAME_TXT) {
         @Override
         public int compare(Animal o1, Animal o2) {
             return o1.getName().compareTo(o2.getName());
@@ -26,26 +26,20 @@ public enum SortMenuType implements Comparator<Animal> {
     SORT_BY_WEIGHT(SORT_BY_WEIGHT_TXT) {
         @Override
         public int compare(Animal o1, Animal o2) {
-            return 0;
+            return Float.compare(o1.getWeight(), o2.getWeight());
         }
     },
     SORT_BY_PREGNANT(SORT_BY_PREGNANT_TXT) {
         @Override
         public int compare(Animal o1, Animal o2) {
-            return 0;
-        }
-    },
-    EXIT(EXIT_TXT) {
-        @Override
-        public int compare(Animal o1, Animal o2) {
-            return 0;
+            return Boolean.compare(o1.isPregnant(), o2.isPregnant());
         }
     };
 
-    public final String menuSortByName;
+    public final String menuSortBy;
 
-    SortMenuType(final String menuSortByName) {
-        this.menuSortByName = menuSortByName;
+    SortMenuType(final String menuSortBy) {
+        this.menuSortBy = menuSortBy;
     }
 
 }

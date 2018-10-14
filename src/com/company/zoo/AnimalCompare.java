@@ -4,7 +4,7 @@ import java.util.Comparator;
 
 public class AnimalCompare implements Comparator<Animal> {
 
-    private SortMenuType sortBy = SortMenuType.SORT_BY_ID_AND_NAME;
+    private SortMenuType sortBy = SortMenuType.SORT_BY_NAME;
 
     private int compareAge(Animal animal_1, Animal animal_2) {
         if (animal_2 == null) return -1;

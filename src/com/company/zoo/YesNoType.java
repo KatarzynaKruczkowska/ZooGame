@@ -6,9 +6,9 @@ public enum YesNoType {
     YES(YES_TXT),
     NO(NO_TXT);
 
-    public final String yesNoTekst;
+    public final String yesNoText;
 
-    YesNoType (final String yesNoTekst){
-        this.yesNoTekst = yesNoTekst;
+    YesNoType (final String yesNoText){
+        this.yesNoText = yesNoText;
     }
 }

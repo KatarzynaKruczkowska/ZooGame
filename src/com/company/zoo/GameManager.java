@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Random;
 
 import static com.company.zoo.AnimalType.OCTOPUS;
-import static com.company.zoo.SortMenuType.SORT_BY_AGE;
+import static com.company.zoo.SortMenuType.*;
 import static com.company.zoo.Texts.*;
 import static java.lang.String.format;
 
@@ -88,9 +88,15 @@ public class GameManager {
                 case TRAINING:
                     training();
                     break;
-                case SORTING:
-                    sorting();
+                case SORTING_BY_ENUM:
+                    sorting_by_ENUM();
+                    break;
+                case SORTING_BY_VARIABLE:
+                    //
+                    break;
 
+                case SORTING_BY_COMPARATOR:
+                    //
                     break;
                 case EXIT:
                     return;
@@ -98,42 +104,27 @@ public class GameManager {
         } while (true);
     }
 
-    private void sorting() {
-        AnimalCompare comparator = new AnimalCompare();
+    private void sorting_by_ENUM() {
 
-        do {
-            SortMenuType sortType = ioManager.chooseFromSortByMenu();
-            comparator.setSortBy(sortType);
-//            comparator.sort(animals);
-            Collections.sort(animals, comparator);
-            showListOfAnimals();
-            return;
-
-//            switch (ioManager.chooseFromSortByMenu()) {
-//                case SORT_BY_ID_AND_NAME:
-//                    Collections.sort(animals);
-//                    showListOfAnimals();
-//                    break;
-//                case SORT_BY_SEX:
-//                    //Collections.sort(animals, sex);
-//                    //showListOfAnimals();
-//                    break;
-//                case SORT_BY_AGE:
-//                    Collections.sort(animals, SORT_BY_AGE);
-//                    showListOfAnimals();
-//                    break;
-//                case SORT_BY_WEIGHT:
-//                    Collections.sort(animals, weight);
-//                    showListOfAnimals();
-//                    break;
-//                case SORT_BY_PREGNANT:
-//                    Collections.sort(animals, pregnant);
-//                    showListOfAnimals();
-//                    break;
-//                case EXIT:
-//                    return;
-//            }
-        } while (true);
+        switch (ioManager.chooseFromSortByMenu()) {
+            case SORT_BY_NAME:
+                Collections.sort(animals, SORT_BY_NAME);
+                break;
+            case SORT_BY_SEX:
+                Collections.sort(animals, SORT_BY_SEX);
+                break;
+            case SORT_BY_AGE:
+                Collections.sort(animals, SORT_BY_AGE);
+                break;
+            case SORT_BY_WEIGHT:
+                Collections.sort(animals, SORT_BY_WEIGHT);
+                break;
+            case SORT_BY_PREGNANT:
+                Collections.sort(animals, SORT_BY_PREGNANT);
+                break;
+        }
+        showListOfAnimals();
+        return;
     }
 
     private void training() {
