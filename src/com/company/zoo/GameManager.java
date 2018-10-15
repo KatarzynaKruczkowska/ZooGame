@@ -96,12 +96,23 @@ public class GameManager {
                     break;
 
                 case SORTING_BY_COMPARATOR:
-                    //
+                    sorting_by_comparator();
                     break;
                 case EXIT:
                     return;
             }
         } while (true);
+    }
+
+    private void sorting_by_comparator() {
+        AnimalCompare comparator = new AnimalCompare();
+
+        SortMenuType sortType = ioManager.chooseFromSortByMenu();
+        comparator.setSortBy(sortType);
+        Collections.sort(animals, comparator);
+        showListOfAnimals();
+        return;
+
     }
 
     private void sorting_by_ENUM() {
