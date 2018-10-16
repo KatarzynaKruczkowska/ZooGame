@@ -10,7 +10,7 @@ public abstract class Animal implements Comparable<Animal> {
     private float weight;
     private boolean pregnant;
 
-    private static final String FORMATTED_LIST_OF_ANIMALS = "id=%d %-25s %s %-8s %s %3d %s %10.2f %s %b";
+    private static final String FORMATTED_LIST_OF_ANIMALS = "id=%d %-25s %s %-7s | %s %3d lat | %s %7.2f kg | %s %b";
 
 
     public Animal(final AnimalType animalType, SexType sex, int age, float weight, boolean pregnant) {

@@ -117,23 +117,7 @@ public class GameManager {
 
     private void sorting_by_ENUM() {
 
-        switch (ioManager.chooseFromSortByMenu()) {
-            case SORT_BY_NAME:
-                Collections.sort(animals, SORT_BY_NAME);
-                break;
-            case SORT_BY_SEX:
-                Collections.sort(animals, SORT_BY_SEX);
-                break;
-            case SORT_BY_AGE:
-                Collections.sort(animals, SORT_BY_AGE);
-                break;
-            case SORT_BY_WEIGHT:
-                Collections.sort(animals, SORT_BY_WEIGHT);
-                break;
-            case SORT_BY_PREGNANT:
-                Collections.sort(animals, SORT_BY_PREGNANT);
-                break;
-        }
+        Collections.sort(animals, ioManager.chooseFromSortByMenu());
         showListOfAnimals();
         return;
     }

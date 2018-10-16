@@ -11,30 +11,26 @@ public class AnimalCompare implements Comparator<Animal> {
     }
 
     private int compareAge(Animal o1, Animal o2) {
-        if (o1 == null || o2 == null) return -1;
-        if (o1.getAge() > o2.getAge()) return 1;
-        if (o1.getAge() < o2.getAge()) return -1;
+        if (o1 == null || o1.getAge() > o2.getAge()) return 1;
+        if (o2 == null || o1.getAge() < o2.getAge()) return -1;
         return 0;
     }
 
     private int compareSex(Animal o1, Animal o2) {
-        if (o1 == null || o2 == null) return -1;
-        if (o1.getSexType().ordinal() > o2.getSexType().ordinal()) return 1;
-        if (o1.getSexType().ordinal() < o2.getSexType().ordinal()) return -1;
+        if (o1 == null || o1.getSexType().ordinal() > o2.getSexType().ordinal()) return 1;
+        if (o2 == null || o1.getSexType().ordinal() < o2.getSexType().ordinal()) return -1;
         return 0;
     }
 
     private int compareWeight(Animal o1, Animal o2) {
-        if (o1 == null || o2 == null) return -1;
-        if (o1.getWeight() > o2.getWeight()) return 1;
-        if (o1.getWeight() < o2.getWeight()) return -1;
+        if (o1 == null || o1.getWeight() > o2.getWeight()) return 1;
+        if (o2 == null || o1.getWeight() < o2.getWeight()) return -1;
         return 0;
     }
 
     private int comparePregnant(Animal o1, Animal o2) {
-        if (o1 == null || o2 == null) return -1;
-        if (o1.isPregnant() == false & o2.isPregnant() == true) return 1;
-        if (o1.isPregnant() == true & o2.isPregnant() == false) return -1;
+        if (o1 == null || o1.isPregnant() == false & o2.isPregnant() == true) return 1;
+        if (o2 == null || o1.isPregnant() == true & o2.isPregnant() == false) return -1;
         return 0;
     }
 
