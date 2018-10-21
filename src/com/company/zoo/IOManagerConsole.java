@@ -38,7 +38,7 @@ public class IOManagerConsole implements IOManager {
     }
 
     public SortMenuType chooseFromSortByMenu() {
-        showMessage(MENU);
+        showMessage(SORT_MENU);
         for (SortMenuType sortMenuType : SortMenuType.values()) {
             showMessage(format(FORMATTED_MENU, sortMenuType.ordinal() + 1, sortMenuType.menuSortBy));
         }

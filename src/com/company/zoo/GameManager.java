@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Random;
 
 import static com.company.zoo.AnimalType.OCTOPUS;
-import static com.company.zoo.SortMenuType.*;
 import static com.company.zoo.Texts.*;
 import static java.lang.String.format;
 
@@ -49,15 +48,11 @@ public class GameManager {
             final int age = getRandomNumber(1, animalType.maxAge);
             final float weight = getRandomWeight(animalType.minWeight, animalType.maxWeight);
             final SexType sex = getRandomSex();
-            boolean pregnant = false;
-            if (sex == SexType.FEMALE) {
-                pregnant = getRandomPregnant();
-            }
 
             if (animalType == OCTOPUS) {
-                animals.add(new Octopus(OCTOPUS, sex, age, weight, pregnant, 10));
+                animals.add(new Octopus(OCTOPUS, sex, age, weight, 10));
             } else {
-                animals.add(animalType.getNewAnimal(sex, age, weight, pregnant));
+                animals.add(animalType.getNewAnimal(sex, age, weight));
             }
         }
         return animals;
@@ -75,9 +70,6 @@ public class GameManager {
         return random.nextFloat() * (max - min) + min; //nigdy nie będzie max, min bedzie zachowane
     }
 
-    private boolean getRandomPregnant() {
-        return random.nextBoolean();
-    }
 
     private void playGame(List<Animal> animals) {
         do {
@@ -91,12 +83,11 @@ public class GameManager {
                 case SORTING_BY_ENUM:
                     sorting_by_ENUM();
                     break;
-                case SORTING_BY_VARIABLE:
-                    //
-                    break;
-
                 case SORTING_BY_COMPARATOR:
                     sorting_by_comparator();
+                    break;
+                case SORTING_BY_VARIABLE:
+                    //
                     break;
                 case EXIT:
                     return;
@@ -105,7 +96,7 @@ public class GameManager {
     }
 
     private void sorting_by_comparator() {
-        AnimalCompare comparator = new AnimalCompare();
+        AnimalKomparator comparator = new AnimalKomparator();
 
         SortMenuType sortType = ioManager.chooseFromSortByMenu();
         comparator.setSortBy(sortType);

@@ -18,6 +18,7 @@ public class Texts {
     public static final String PREGNANT = "Ciąża";
     public static final String NUMBER_OF_ANIMALS = "Liczba zwierząt:";
     public static final String MENU = "MENU:";
+    public static final String SORT_MENU = "MENU sortowania:";
     public static final String LIST_OF_ANIMALS_TXT = "Lista zwierząt w Zoo";
     public static final String TRAINING_TXT = "Tresura";
     public static final String EXIT_TXT = "Wyjście";
@@ -45,9 +46,14 @@ public class Texts {
     public static final String SORTING_BY_ENUM_TXT = "Sortowanie przez funkcję pod ENUMem";
     public static final String SORTING_BY_COMPARATOR_TXT = "Sortowanie przez użycie komparatora innego dla każdego pola";
     public static final String SORTING_BY_VARIABLE_TXT = "Sortowanie przez zastosowanie zmiennej opisującej pole sortowania";
-    public static final String SORT_BY_NAME_TXT = "Sortowanie po nazwie";
+    public static final String SORT_BY_ID_ASC_TXT = "Sortowanie po typie (id) rosnąco";
+    public static final String SORT_BY_ID_DESC_TXT = "Sortowanie po typie (id) malejąco";
+    public static final String SORT_BY_NAME_ASC_TXT = "Sortowanie po nazwie rosnąco";
+    public static final String SORT_BY_NAME_DESC_TXT = "Sortowanie po nazwie malejąco";
     public static final String SORT_BY_SEX_TXT = "Sortowanie według płci";
-    public static final String SORT_BY_AGE_TXT = "Sortowanie według wieku";
-    public static final String SORT_BY_WEIGHT_TXT = "Sortowanie według wagi";
+    public static final String SORT_BY_AGE_ASC_TXT = "Sortowanie według wieku rosnąco";
+    public static final String SORT_BY_AGE_DESC_TXT = "Sortowanie według wieku malejąco";
+    public static final String SORT_BY_WEIGHT_ASC_TXT = "Sortowanie według wagi rosnąco";
+    public static final String SORT_BY_WEIGHT_DESC_TXT = "Sortowanie według wagi malejąco";
     public static final String SORT_BY_PREGNANT_TXT = "Sortowanie po polu ciąża";
 }

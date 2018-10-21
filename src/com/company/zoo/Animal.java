@@ -3,6 +3,8 @@ package com.company.zoo;
 import static com.company.zoo.Texts.*;
 import static java.lang.String.format;
 
+import java.util.Random;
+
 public abstract class Animal implements Comparable<Animal> {
     private final AnimalType animalType;
     private final SexType sex;
@@ -13,12 +15,19 @@ public abstract class Animal implements Comparable<Animal> {
     private static final String FORMATTED_LIST_OF_ANIMALS = "id=%d %-25s %s %-7s | %s %3d lat | %s %7.2f kg | %s %b";
 
 
-    public Animal(final AnimalType animalType, SexType sex, int age, float weight, boolean pregnant) {
+    public Animal(final AnimalType animalType, SexType sex, int age, float weight) {
+
+        final Random random = new Random();
+
         this.animalType = animalType;
         this.sex = sex;
         this.age = age;
         this.weight = weight;
-        this.pregnant = pregnant;
+        if (sex == SexType.FEMALE) {
+            this.pregnant = random.nextBoolean();
+        } else {
+            this.pregnant = false;
+        }
     }
 
     public String getName() {
