@@ -2,7 +2,7 @@ package com.company.zoo;
 
 import java.util.Comparator;
 
-public class AnimalKomparator implements Comparator<Animal> {
+public class AnimalComparator implements Comparator<Animal> {
 
     private SortMenuType sortBy = SortMenuType.SORT_BY_NAME_ASC;
 

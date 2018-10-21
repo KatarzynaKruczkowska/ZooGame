@@ -4,8 +4,8 @@ import static com.company.zoo.Texts.SNAKE_SOUND;
 
 public class Snake extends Animal {
 
-    public Snake(final AnimalType animalType, final SexType sex, final int age, final float weight, final boolean pregnant) {
-        super(animalType, sex, age, weight, pregnant);
+    public Snake(final AnimalType animalType, final SexType sex, final int age, final float weight) {
+        super(animalType, sex, age, weight);
     }
 
     @Override

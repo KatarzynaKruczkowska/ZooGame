@@ -1,9 +1,9 @@
 package com.company.zoo;
 
+import java.util.Random;
+
 import static com.company.zoo.Texts.*;
 import static java.lang.String.format;
-
-import java.util.Random;
 
 public abstract class Animal implements Comparable<Animal> {
     private final AnimalType animalType;
@@ -23,11 +23,9 @@ public abstract class Animal implements Comparable<Animal> {
         this.sex = sex;
         this.age = age;
         this.weight = weight;
-        if (sex == SexType.FEMALE) {
-            this.pregnant = random.nextBoolean();
-        } else {
-            this.pregnant = false;
-        }
+//        this.pregnant = sex == SexType.FEMALE ? random.nextBoolean() : false;
+        this.pregnant = sex == SexType.FEMALE && random.nextBoolean();
+
     }
 
     public String getName() {

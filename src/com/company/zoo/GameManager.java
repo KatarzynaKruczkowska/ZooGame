@@ -96,21 +96,17 @@ public class GameManager {
     }
 
     private void sorting_by_comparator() {
-        AnimalKomparator comparator = new AnimalKomparator();
+        AnimalComparator comparator = new AnimalComparator();
 
         SortMenuType sortType = ioManager.chooseFromSortByMenu();
         comparator.setSortBy(sortType);
         Collections.sort(animals, comparator);
         showListOfAnimals();
-        return;
-
     }
 
     private void sorting_by_ENUM() {
-
         Collections.sort(animals, ioManager.chooseFromSortByMenu());
         showListOfAnimals();
-        return;
     }
 
     private void training() {
