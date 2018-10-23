@@ -45,29 +45,18 @@ public class GameManager {
 
         for (int i = 0; i < startNumberOfAnimals; i++) {
             final AnimalType animalType = AnimalType.values()[getRandomNumber(1, AnimalType.values().length) - 1];   //0-7
-            final int age = getRandomNumber(1, animalType.maxAge);
-            final float weight = getRandomWeight(animalType.minWeight, animalType.maxWeight);
-            final SexType sex = getRandomSex();
 
             if (animalType == OCTOPUS) {
-                animals.add(new Octopus(OCTOPUS, sex, age, weight, 10));
+                animals.add(new Octopus(OCTOPUS, 10));
             } else {
-                animals.add(animalType.getNewAnimal(sex, age, weight));
+                animals.add(animalType.getNewAnimal());
             }
         }
         return animals;
     }
 
-    private SexType getRandomSex() {
-        return SexType.values()[random.nextInt(SexType.values().length)];
-    }
-
     private int getRandomNumber(final int min, final int max) {
         return random.nextInt(max + 1 - min) + min; //tak musi być żeby zakres był zachowany
-    }
-
-    private float getRandomWeight(final float min, final float max) {
-        return random.nextFloat() * (max - min) + min; //nigdy nie będzie max, min bedzie zachowane
     }
 
 
@@ -85,9 +74,6 @@ public class GameManager {
                     break;
                 case SORTING_BY_COMPARATOR:
                     sorting_by_comparator();
-                    break;
-                case SORTING_BY_VARIABLE:
-                    //
                     break;
                 case EXIT:
                     return;

@@ -6,6 +6,9 @@ import static com.company.zoo.Texts.*;
 import static java.lang.String.format;
 
 public abstract class Animal implements Comparable<Animal> {
+
+    final Random random = new Random();
+
     private final AnimalType animalType;
     private final SexType sex;
     private int age; //age in years? days? rounds?
@@ -15,17 +18,27 @@ public abstract class Animal implements Comparable<Animal> {
     private static final String FORMATTED_LIST_OF_ANIMALS = "id=%d %-25s %s %-7s | %s %3d lat | %s %7.2f kg | %s %b";
 
 
-    public Animal(final AnimalType animalType, SexType sex, int age, float weight) {
-
-        final Random random = new Random();
+    public Animal(final AnimalType animalType) {
 
         this.animalType = animalType;
-        this.sex = sex;
-        this.age = age;
-        this.weight = weight;
-//        this.pregnant = sex == SexType.FEMALE ? random.nextBoolean() : false;
-        this.pregnant = sex == SexType.FEMALE && random.nextBoolean();
+        this.sex = getRandomSex();
+        this.age = getRandomNumber(1, animalType.maxAge);
+        this.weight = getRandomWeight(animalType.minWeight, animalType.maxWeight);
+//        this.pregnant = sex == SexType.FEMALE ? random.nextBoolean() : false; //operator tenarny
+        this.pregnant = sex == SexType.FEMALE && random.nextBoolean();          // to samo co wyzej
 
+    }
+
+    private SexType getRandomSex() {
+        return SexType.values()[random.nextInt(SexType.values().length)];
+    }
+
+    private int getRandomNumber(final int min, final int max) {
+        return random.nextInt(max + 1 - min) + min; //tak musi być żeby zakres był zachowany
+    }
+
+    private float getRandomWeight(final float min, final float max) {
+        return random.nextFloat() * (max - min) + min; //nigdy nie będzie max, min bedzie zachowane
     }
 
     public String getName() {
@@ -33,7 +46,6 @@ public abstract class Animal implements Comparable<Animal> {
     }
 
     public SexType getSexType() {
-        //return SexType.valueOf(sex).printableSex;
         return sex;
     }
 

@@ -6,12 +6,12 @@ public class Octopus extends Animal {
 
     private int tentaclesAmount = 8;
 
-    public Octopus(final AnimalType animalType, final SexType sex, final int age, final float weight) {
-        super(animalType, sex, age, weight);
+    public Octopus(final AnimalType animalType) {
+        super(animalType);
     }
 
-    public Octopus(final AnimalType animalType, final SexType sex, final int age, final float weight, final int tentaclesAmount) {
-        super(animalType, sex, age, weight);
+    public Octopus(final AnimalType animalType, final int tentaclesAmount) {
+        super(animalType);
         this.tentaclesAmount = tentaclesAmount;
     }
 
