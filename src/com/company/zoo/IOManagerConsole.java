@@ -16,6 +16,19 @@ public class IOManagerConsole implements IOManager {
         System.out.println(message);
     }
 
+    @Override
+    public AnimalType selectAnimalType() {
+        showMessage(SELECT_ANIMAL_TYPE);
+        for (AnimalType animalType : AnimalType.values()) {
+            showMessage(format(FORMATTED_MENU, animalType.ordinal() + 1, animalType.typeName));
+        }
+        int result = 0;
+        do {
+            result = getNumber();
+        } while (result < 1 || result > AnimalType.values().length);
+        return AnimalType.values()[result - 1];
+    }
+
     public int chooseAnimal(int max) {
         showMessage(CHOOSE_AN_ANIMAL);
         int result = 0;

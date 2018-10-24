@@ -2,13 +2,15 @@ package com.company.zoo;
 
 public interface IOManager {
 
-    public void showMessage(final String message);
+    void showMessage(final String message);
 
-    public boolean getDecision(final String message);
+    boolean getDecision(final String message);
 
-    public MenuType chooseFromMenu();
+    MenuType chooseFromMenu();
 
-    public SortMenuType chooseFromSortByMenu();
+    SortMenuType chooseFromSortByMenu();
 
-    public int chooseAnimal(int max);
+    AnimalType selectAnimalType();
+
+    int chooseAnimal(int max);
 }

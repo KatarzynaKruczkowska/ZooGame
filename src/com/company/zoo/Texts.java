@@ -56,4 +56,7 @@ public class Texts {
     public static final String SORT_BY_WEIGHT_ASC_TXT = "Sortowanie według wagi rosnąco";
     public static final String SORT_BY_WEIGHT_DESC_TXT = "Sortowanie według wagi malejąco";
     public static final String SORT_BY_PREGNANT_TXT = "Sortowanie po polu ciąża";
+    public static final String FEEDING_TXT = "Karmienie";
+    public static final String WALKING_TXT = "Spacer";
+    public static final String SELECT_ANIMAL_TYPE = "Wybierz gatunek do karmienia";
 }

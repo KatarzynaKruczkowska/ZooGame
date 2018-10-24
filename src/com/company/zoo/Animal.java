@@ -14,6 +14,7 @@ public abstract class Animal implements Comparable<Animal> {
     private int age; //age in years? days? rounds?
     private float weight;
     private boolean pregnant;
+    private int starvingDays = 0;
 
     private static final String FORMATTED_LIST_OF_ANIMALS = "id=%d %-25s %s %-7s | %s %3d lat | %s %7.2f kg | %s %b";
 
@@ -27,6 +28,11 @@ public abstract class Animal implements Comparable<Animal> {
 //        this.pregnant = sex == SexType.FEMALE ? random.nextBoolean() : false; //operator tenarny
         this.pregnant = sex == SexType.FEMALE && random.nextBoolean();          // to samo co wyzej
 
+    }
+
+    public void eat() {
+        weight += 1;
+        starvingDays = -1;
     }
 
     private SexType getRandomSex() {

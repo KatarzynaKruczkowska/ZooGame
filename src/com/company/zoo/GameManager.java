@@ -1,13 +1,9 @@
 package com.company.zoo;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 import static com.company.zoo.AnimalType.OCTOPUS;
 import static com.company.zoo.Texts.*;
-import static java.lang.String.format;
 
 public class GameManager {
 
@@ -18,7 +14,8 @@ public class GameManager {
     private static final String FORMATTED_SHORT_LIST_OF_ANIMALS = "%2d. %s";
 
     final Random random = new Random();
-    private List<Animal> animals;
+    private Map<AnimalType, List<Animal>> animals = new HashMap<>();
+    //private List<Animal> animals;
 
     public GameManager(final IOManager ioManager) {
         this.ioManager = ioManager;
@@ -40,17 +37,21 @@ public class GameManager {
         }
     }
 
-    private List<Animal> initPopulation(final int startNumberOfAnimals) {
-        final List<Animal> animals = new ArrayList<>(startNumberOfAnimals);
+    private Map<AnimalType, List<Animal>> initPopulation(final int startNumberOfAnimals) {
+        final Map<AnimalType, List<Animal>> animals = new HashMap<>();
 
         for (int i = 0; i < startNumberOfAnimals; i++) {
             final AnimalType animalType = AnimalType.values()[getRandomNumber(1, AnimalType.values().length) - 1];   //0-7
-
-            if (animalType == OCTOPUS) {
-                animals.add(new Octopus(OCTOPUS, 10));
-            } else {
-                animals.add(animalType.getNewAnimal());
+            List<Animal> animalsList = animals.get(animalType);
+            if(animalsList == null){
+                animalsList = new ArrayList<>();
             }
+            if (animalType == OCTOPUS) {
+                animalsList.add(new Octopus(OCTOPUS, 10));
+            } else {
+                animalsList.add(animalType.getNewAnimal());
+            }
+            animals.put(animalType, animalsList);
         }
         return animals;
     }
@@ -75,10 +76,29 @@ public class GameManager {
                 case SORTING_BY_COMPARATOR:
                     sorting_by_comparator();
                     break;
+                case FEEDING:
+                    feeding();
+                    break;
+                case WALKING:
+                    walking();
+                    break;
                 case EXIT:
                     return;
             }
         } while (true);
+    }
+
+    private void feeding() {
+        AnimalType animalType = ioManager.selectAnimalType();
+        for (final Animal animal : animals.get(animalType)) {
+            animal.eat();
+        }
+
+//        animals.get(animalType).stream()
+//                .limit(10)
+//                .filter(animal -> animal.getAge() > 2)
+//                .forEach(Animal::eat);
+
     }
 
     private void sorting_by_comparator() {
