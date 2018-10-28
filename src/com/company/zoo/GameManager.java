@@ -4,6 +4,7 @@ import java.util.*;
 
 import static com.company.zoo.AnimalType.OCTOPUS;
 import static com.company.zoo.Texts.*;
+import static java.lang.String.format;
 
 public class GameManager {
 
@@ -31,9 +32,36 @@ public class GameManager {
     }
 
     private void showListOfAnimals() {
-        ioManager.showMessage(NUMBER_OF_ANIMALS + Integer.toString(animals.size()));
-        for (int i = 0; i < animals.size(); i++) {
-            ioManager.showMessage(i + 1 + " " + animals.get(i).toString());
+        //ioManager.showMessage(NUMBER_OF_ANIMALS + Integer.toString(animals.size()));
+//        int counter = 0;
+//        for (int i = 0; i < AnimalType.values().length; i++) {
+//            final AnimalType animalType = AnimalType.values()[i];
+//            final List<Animal> animalsList = animals.get(animalType);
+//            if (animalsList != null) {
+//                //ioManager.showMessage(animalType.typeName);
+//                for (int j = 0; j < animalsList.size(); j++) {
+//                    ioManager.showMessage(counter + 1 + " " + animalsList.get(j).toString());
+//                    counter += 1;
+//                }
+//            }
+//        }
+
+        int counter = 0;
+        for (AnimalType animalType : animals.keySet()) {
+            final List<Animal> animalsList = animals.get(animalType);
+            for (int i = 0; i < animalsList.size(); i++) {
+                ioManager.showMessage(counter + 1 + " " + animalsList.get(i).toString());
+                counter += 1;
+            }
+        }
+    }
+
+    private void showListTypesOfAnimals() {
+        int counter = 0;
+        for (AnimalType animalType : animals.keySet()) {
+            final List<Animal> animalsList = animals.get(animalType);
+            ioManager.showMessage(counter + 1 + " " + animalType.typeName);
+            counter += 1;
         }
     }
 
@@ -43,7 +71,7 @@ public class GameManager {
         for (int i = 0; i < startNumberOfAnimals; i++) {
             final AnimalType animalType = AnimalType.values()[getRandomNumber(1, AnimalType.values().length) - 1];   //0-7
             List<Animal> animalsList = animals.get(animalType);
-            if(animalsList == null){
+            if (animalsList == null) {
                 animalsList = new ArrayList<>();
             }
             if (animalType == OCTOPUS) {
@@ -61,7 +89,7 @@ public class GameManager {
     }
 
 
-    private void playGame(List<Animal> animals) {
+    private void playGame(Map<AnimalType, List<Animal>> animals) {
         do {
             switch (ioManager.chooseFromMenu()) {
                 case LIST_OF_ANIMALS:
@@ -71,16 +99,16 @@ public class GameManager {
                     training();
                     break;
                 case SORTING_BY_ENUM:
-                    sorting_by_ENUM();
+                    sortingByEnum();
                     break;
                 case SORTING_BY_COMPARATOR:
-                    sorting_by_comparator();
+                    sortingByComparator();
                     break;
                 case FEEDING:
                     feeding();
                     break;
                 case WALKING:
-                    walking();
+                    //walking();
                     break;
                 case EXIT:
                     return;
@@ -101,27 +129,34 @@ public class GameManager {
 
     }
 
-    private void sorting_by_comparator() {
+    private void sortingByComparator() {
         AnimalComparator comparator = new AnimalComparator();
-
         SortMenuType sortType = ioManager.chooseFromSortByMenu();
         comparator.setSortBy(sortType);
-        Collections.sort(animals, comparator);
+        for (AnimalType animalType : animals.keySet()) {
+            final List<Animal> animalsList = animals.get(animalType);
+            Collections.sort(animalsList, comparator);
+            animals.put(animalType, animalsList);
+        }
         showListOfAnimals();
     }
 
-    private void sorting_by_ENUM() {
-        Collections.sort(animals, ioManager.chooseFromSortByMenu());
+    private void sortingByEnum() {
+        SortMenuType sortType = ioManager.chooseFromSortByMenu();
+        for (AnimalType animalType : animals.keySet()) {
+            final List<Animal> animalsList = animals.get(animalType);
+            Collections.sort(animalsList, sortType);
+            animals.put(animalType, animalsList);
+        }
         showListOfAnimals();
     }
 
     private void training() {
-        showListOfAnimals();
+        showListTypesOfAnimals();
         int index = ioManager.chooseAnimal(animals.size());
-        ioManager.showMessage(format(FORMATTED_SHORT_LIST_OF_ANIMALS, index,
-                animals.get(index - 1).getName()));
+        final AnimalType animalType = AnimalType.values()[index];
+        final List<Animal> animalsList = animals.get(animalType);
         ioManager.showMessage(SOUND);
-        ioManager.showMessage(animals.get(index - 1).getSound());
-
+        ioManager.showMessage(animalsList.get(0).getSound());
     }
 }
