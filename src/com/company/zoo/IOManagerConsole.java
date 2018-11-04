@@ -1,5 +1,6 @@
 package com.company.zoo;
 
+import java.util.List;
 import java.util.Scanner;
 
 import static com.company.zoo.Texts.*;
@@ -17,7 +18,12 @@ public class IOManagerConsole implements IOManager {
     }
 
     @Override
-//    public AnimalType selectAnimalType() {
+    public AnimalType selectAnimalType(final List<AnimalType> animalTypeList) {
+        for (int i = 0; i < animalTypeList.size(); i++) {
+            showMessage((i + 1) + " " + animalTypeList.get(i).typeName);
+        }
+        return animalTypeList.get(chooseAnimal(animalTypeList.size(), SELECT_ANIMAL_TYPE));
+    }
 //
 //        showMessage(SELECT_ANIMAL_TYPE);
 //        int counter = 0;
@@ -33,7 +39,11 @@ public class IOManagerConsole implements IOManager {
 //    }
 
     public int chooseAnimal(int max) {
-        showMessage(CHOOSE_AN_ANIMAL);
+        return chooseAnimal(max, CHOOSE_AN_ANIMAL);
+    }
+
+    public int chooseAnimal(final int max, final String text) {
+        showMessage(text);
         int result = 0;
         do {
             result = getNumber();

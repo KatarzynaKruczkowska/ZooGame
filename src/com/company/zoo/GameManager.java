@@ -3,7 +3,7 @@ package com.company.zoo;
 import java.util.*;
 
 import static com.company.zoo.AnimalType.OCTOPUS;
-import static com.company.zoo.Texts.*;
+import static com.company.zoo.Texts.END_OF_THE_GAME;
 
 public class GameManager {
 
@@ -63,20 +63,20 @@ public class GameManager {
         }
     }
 
-    private AnimalType chooseTypeOfAnimal() {
-        showListTypesOfAnimals();
-        int index = ioManager.chooseAnimal(animals.size());
-        int i = 1;
-        AnimalType type = null;
-        for (AnimalType animalType : animals.keySet()) {
-            if (i == index) {
-                type = animalType;
-                break;
-            }
-            i += 1;
-        }
-        return type;
-    }
+//       private AnimalType chooseTypeOfAnimal() {
+//            showListTypesOfAnimals();
+//            int index = ioManager.chooseAnimal(animals.size());
+//            int i = 1;
+//            AnimalType type = null;
+//            for (AnimalType animalType : animals.keySet()) {
+//                if (i == index) {
+//                    type = animalType;
+//                    break;
+//                }
+//                i += 1;
+//            }
+//            return type;
+//        }
 
     private Map<AnimalType, List<Animal>> initPopulation(final int startNumberOfAnimals) {
         final Map<AnimalType, List<Animal>> animals = new HashMap<>();
@@ -86,13 +86,13 @@ public class GameManager {
             List<Animal> animalsList = animals.get(animalType);
             if (animalsList == null) {
                 animalsList = new ArrayList<>();
+                animals.put(animalType, animalsList);
             }
             if (animalType == OCTOPUS) {
                 animalsList.add(new Octopus(OCTOPUS, 10));
             } else {
                 animalsList.add(animalType.getNewAnimal());
             }
-            animals.put(animalType, animalsList);
         }
         return animals;
     }
@@ -131,22 +131,10 @@ public class GameManager {
 
     private void feeding() {
 
-        AnimalType animalType = chooseTypeOfAnimal();
-        final List<Animal> animalsList = animals.get(animalType);
-        for (int i = 0; i < animalsList.size(); i++) {
-            animalsList.get(i).eat();
+        final AnimalType animalType = ioManager.selectAnimalType(new ArrayList<>(animals.keySet()));
+        for (Animal animal : animals.get(animalType)) {
+            animal.eat();
         }
-
-//        AnimalType animalType = ioManager.selectAnimalType();
-//        for (final Animal animal : animals.get(animalType)) {
-//            animal.eat();
-//        }
-
-//        animals.get(animalType).stream()
-//                .limit(10)
-//                .filter(animal -> animal.getAge() > 2)
-//                .forEach(Animal::eat);
-
     }
 
     private void sortingByComparator() {
@@ -156,7 +144,6 @@ public class GameManager {
         for (AnimalType animalType : animals.keySet()) {
             final List<Animal> animalsList = animals.get(animalType);
             Collections.sort(animalsList, comparator);
-            animals.put(animalType, animalsList);
         }
         showListOfAnimals();
     }
@@ -166,20 +153,19 @@ public class GameManager {
         for (AnimalType animalType : animals.keySet()) {
             final List<Animal> animalsList = animals.get(animalType);
             Collections.sort(animalsList, sortType);
-            animals.put(animalType, animalsList);
         }
         showListOfAnimals();
     }
 
     private void training() {
-        AnimalType animalType = chooseTypeOfAnimal();
-        final List<Animal> animalsList = animals.get(animalType);
-        ioManager.showMessage(animalsList.get(0).getName());
-        //ioManager.showMessage(SOUND);
-        ioManager.showMessage(animalsList.get(0).getSound());
+        AnimalType animalType = ioManager.selectAnimalType(new ArrayList<>(animals.keySet()));
+
+        final Animal firstAnimal = animals.get(animalType).get(0);
+        ioManager.showMessage(firstAnimal.getName());
+        ioManager.showMessage(firstAnimal.getSound());
         //każde zwierzę musi być zmodyfikowane (inf że była zabawa)
-        for (int i = 0; i < animalsList.size(); i++) {
-            animalsList.get(i).fun();
+        for (Animal animal : animals.get(animalType)) {
+            animal.fun();
         }
     }
 }

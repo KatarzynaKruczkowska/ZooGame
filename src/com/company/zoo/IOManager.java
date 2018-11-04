@@ -1,5 +1,7 @@
 package com.company.zoo;
 
+import java.util.List;
+
 public interface IOManager {
 
     void showMessage(final String message);
@@ -10,7 +12,7 @@ public interface IOManager {
 
     SortMenuType chooseFromSortByMenu();
 
-//    AnimalType selectAnimalType();
+    AnimalType selectAnimalType(final List<AnimalType> animalTypeList);
 
-    int chooseAnimal(int max);
+    int chooseAnimal(final int max);
 }
