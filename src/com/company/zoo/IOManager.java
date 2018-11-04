@@ -10,7 +10,7 @@ public interface IOManager {
 
     SortMenuType chooseFromSortByMenu();
 
-    AnimalType selectAnimalType();
+//    AnimalType selectAnimalType();
 
     int chooseAnimal(int max);
 }

@@ -15,6 +15,8 @@ public abstract class Animal implements Comparable<Animal> {
     private float weight;
     private boolean pregnant;
     private int starvingDays = 0;
+    private int funDays = 0;
+    private int walkingDays = 0;
 
     private static final String FORMATTED_LIST_OF_ANIMALS = "id=%d %-25s %s %-7s | %s %3d lat | %s %7.2f kg | %s %b";
 
@@ -33,6 +35,14 @@ public abstract class Animal implements Comparable<Animal> {
     public void eat() {
         weight += 1;
         starvingDays = -1;
+    }
+
+    public void fun(){
+        funDays += 1;
+    }
+
+    public void walk(){
+        walkingDays += 1;
     }
 
     private SexType getRandomSex() {

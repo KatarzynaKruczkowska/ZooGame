@@ -4,7 +4,6 @@ import java.util.*;
 
 import static com.company.zoo.AnimalType.OCTOPUS;
 import static com.company.zoo.Texts.*;
-import static java.lang.String.format;
 
 public class GameManager {
 
@@ -59,10 +58,24 @@ public class GameManager {
     private void showListTypesOfAnimals() {
         int counter = 0;
         for (AnimalType animalType : animals.keySet()) {
-            final List<Animal> animalsList = animals.get(animalType);
             ioManager.showMessage(counter + 1 + " " + animalType.typeName);
             counter += 1;
         }
+    }
+
+    private AnimalType chooseTypeOfAnimal() {
+        showListTypesOfAnimals();
+        int index = ioManager.chooseAnimal(animals.size());
+        int i = 1;
+        AnimalType type = null;
+        for (AnimalType animalType : animals.keySet()) {
+            if (i == index) {
+                type = animalType;
+                break;
+            }
+            i += 1;
+        }
+        return type;
     }
 
     private Map<AnimalType, List<Animal>> initPopulation(final int startNumberOfAnimals) {
@@ -117,10 +130,17 @@ public class GameManager {
     }
 
     private void feeding() {
-        AnimalType animalType = ioManager.selectAnimalType();
-        for (final Animal animal : animals.get(animalType)) {
-            animal.eat();
+
+        AnimalType animalType = chooseTypeOfAnimal();
+        final List<Animal> animalsList = animals.get(animalType);
+        for (int i = 0; i < animalsList.size(); i++) {
+            animalsList.get(i).eat();
         }
+
+//        AnimalType animalType = ioManager.selectAnimalType();
+//        for (final Animal animal : animals.get(animalType)) {
+//            animal.eat();
+//        }
 
 //        animals.get(animalType).stream()
 //                .limit(10)
@@ -152,11 +172,14 @@ public class GameManager {
     }
 
     private void training() {
-        showListTypesOfAnimals();
-        int index = ioManager.chooseAnimal(animals.size());
-        final AnimalType animalType = AnimalType.values()[index];
+        AnimalType animalType = chooseTypeOfAnimal();
         final List<Animal> animalsList = animals.get(animalType);
-        ioManager.showMessage(SOUND);
+        ioManager.showMessage(animalsList.get(0).getName());
+        //ioManager.showMessage(SOUND);
         ioManager.showMessage(animalsList.get(0).getSound());
+        //każde zwierzę musi być zmodyfikowane (inf że była zabawa)
+        for (int i = 0; i < animalsList.size(); i++) {
+            animalsList.get(i).fun();
+        }
     }
 }

@@ -17,17 +17,20 @@ public class IOManagerConsole implements IOManager {
     }
 
     @Override
-    public AnimalType selectAnimalType() {
-        showMessage(SELECT_ANIMAL_TYPE);
-        for (AnimalType animalType : AnimalType.values()) {
-            showMessage(format(FORMATTED_MENU, animalType.ordinal() + 1, animalType.typeName));
-        }
-        int result = 0;
-        do {
-            result = getNumber();
-        } while (result < 1 || result > AnimalType.values().length);
-        return AnimalType.values()[result - 1];
-    }
+//    public AnimalType selectAnimalType() {
+//
+//        showMessage(SELECT_ANIMAL_TYPE);
+//        int counter = 0;
+//        for (AnimalType animalType : animals.keySet()) {
+//                ioManager.showMessage(counter + 1 + " " + animalType.typeName);
+//                counter += 1;
+//            }
+//        int result = 0;
+//        do {
+//            result = getNumber();
+//        } while (result < 1 || result > max);
+//        return result;
+//    }
 
     public int chooseAnimal(int max) {
         showMessage(CHOOSE_AN_ANIMAL);

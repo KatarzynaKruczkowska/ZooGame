@@ -58,5 +58,5 @@ public class Texts {
     public static final String SORT_BY_PREGNANT_TXT = "Sortowanie po polu ciąża";
     public static final String FEEDING_TXT = "Karmienie";
     public static final String WALKING_TXT = "Spacer";
-    public static final String SELECT_ANIMAL_TYPE = "Wybierz gatunek do karmienia";
+    public static final String SELECT_ANIMAL_TYPE = "Wybierz gatunek";
 }
