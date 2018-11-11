@@ -16,14 +16,12 @@ public class Texts {
     public static final String AGE = "Wiek:";
     public static final String WEIGHT = "Waga";
     public static final String PREGNANT = "Ciąża";
-    public static final String NUMBER_OF_ANIMALS = "Liczba zwierząt:";
     public static final String MENU = "MENU:";
     public static final String SORT_MENU = "MENU sortowania:";
     public static final String LIST_OF_ANIMALS_TXT = "Lista zwierząt w Zoo";
     public static final String TRAINING_TXT = "Tresura";
     public static final String EXIT_TXT = "Wyjście";
     public static final String CHOOSE_AN_ANIMAL = "Wybierz zwierzę podając jego numer";
-    public static final String SOUND = "To zwierzę wydaje dźwięk:";
     public static final String FEMALE = "samica";
     public static final String MALE = "samiec";
     public static final String ELEPHANT_SOUND = "głębokie chrząkanie jako stała forma komunikacji, " +
@@ -45,7 +43,6 @@ public class Texts {
     public static final String TIGER_NAME = "Tygrys azjatycki";
     public static final String SORTING_BY_ENUM_TXT = "Sortowanie przez funkcję pod ENUMem";
     public static final String SORTING_BY_COMPARATOR_TXT = "Sortowanie przez użycie komparatora innego dla każdego pola";
-    public static final String SORTING_BY_VARIABLE_TXT = "Sortowanie przez zastosowanie zmiennej opisującej pole sortowania";
     public static final String SORT_BY_ID_ASC_TXT = "Sortowanie po typie (id) rosnąco";
     public static final String SORT_BY_ID_DESC_TXT = "Sortowanie po typie (id) malejąco";
     public static final String SORT_BY_NAME_ASC_TXT = "Sortowanie po nazwie rosnąco";
@@ -59,4 +56,12 @@ public class Texts {
     public static final String FEEDING_TXT = "Karmienie";
     public static final String WALKING_TXT = "Spacer";
     public static final String SELECT_ANIMAL_TYPE = "Wybierz gatunek";
+    public static final String SORTED_MAP_OF_ANIMALS = "\nMapa zwierząt w podziale na gatunki";
+    public static final String SORTED_LIST_OF_ANIMALS = "\nPosortowana pełna lista zwierząt";
+    public static final String EATING = "je smaczny posiłek";
+    public static final String WALKING = "idzie na spacer";
+    public static final String PLAYING = "bawi się";
+    public static final String SUNSET_TXT = "Podsumowanie dnia";
+    public static final String ANIMAL_TYPE_REMOVAL = "Nie ma już zwirząt tego gatunku w Zoo";
+    public static final String CURRENT_STATUS = "Aktualny stan Zoo";
 }

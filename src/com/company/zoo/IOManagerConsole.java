@@ -22,21 +22,8 @@ public class IOManagerConsole implements IOManager {
         for (int i = 0; i < animalTypeList.size(); i++) {
             showMessage((i + 1) + " " + animalTypeList.get(i).typeName);
         }
-        return animalTypeList.get(chooseAnimal(animalTypeList.size(), SELECT_ANIMAL_TYPE));
+        return animalTypeList.get(chooseAnimal(animalTypeList.size(), SELECT_ANIMAL_TYPE) - 1);
     }
-//
-//        showMessage(SELECT_ANIMAL_TYPE);
-//        int counter = 0;
-//        for (AnimalType animalType : animals.keySet()) {
-//                ioManager.showMessage(counter + 1 + " " + animalType.typeName);
-//                counter += 1;
-//            }
-//        int result = 0;
-//        do {
-//            result = getNumber();
-//        } while (result < 1 || result > max);
-//        return result;
-//    }
 
     public int chooseAnimal(int max) {
         return chooseAnimal(max, CHOOSE_AN_ANIMAL);

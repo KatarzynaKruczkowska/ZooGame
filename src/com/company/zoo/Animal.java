@@ -32,17 +32,33 @@ public abstract class Animal implements Comparable<Animal> {
 
     }
 
+    public void changePregnantStatus() {
+        pregnant = false;
+    }
+
     public void eat() {
         weight += 1;
         starvingDays = -1;
     }
 
-    public void fun(){
+    public void ageChange() {
+        age += 1;
+    }
+
+    public void weightLoss() {
+        weight -= 1;
+    }
+
+    public void fun() {  //training
         funDays += 1;
     }
 
-    public void walk(){
+    public void walk() {
         walkingDays += 1;
+    }
+
+    public int getStarvingDays() {
+        return starvingDays;
     }
 
     private SexType getRandomSex() {
