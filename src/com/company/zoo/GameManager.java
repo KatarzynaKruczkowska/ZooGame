@@ -33,12 +33,12 @@ public class GameManager {
     private void endOfTheDay() {
         ioManager.showMessage(SUNSET_TXT);
 
-        int counter = 0;
+        final List<AnimalType> keysToRemove = new ArrayList<>();
+
         for (AnimalType animalType : animals.keySet()) {
             final List<Animal> animalsList = animals.get(animalType);
             ioManager.showMessage(animalType.typeName);
             for (int i = 0; i < animalsList.size(); i++) {
-                counter += 1;
                 Animal animal = animalsList.get(i);
                 animal.ageChange();
                 if (animal.getStarvingDays() < -1) {
@@ -52,20 +52,29 @@ public class GameManager {
                 }
                 if (animal.getWeight() < animalType.minWeight || animal.getAge() >= animalType.maxAge) {
                     animalsList.remove(i);
-                    if (animalsList.size() == 0) {
-                        animals.remove(animalType, animalsList);
+                    if (animalsList.isEmpty()) {
+                        keysToRemove.add(animalType);
                         ioManager.showMessage(animalType.typeName);
                         ioManager.showMessage(ANIMAL_TYPE_REMOVAL);
                         break;
                     }
                 }
-                ioManager.showMessage(CURRENT_STATUS);
-                showMapOfAnimals();
-                if (animals.size() <= 2) {
-                    endOfTheGame = true;
-                }
+
             }
         }
+
+        ioManager.showMessage(CURRENT_STATUS);
+        showMapOfAnimals();
+        if (animals.size() <= 2) {
+            endOfTheGame = true;
+        }
+
+//        keysToRemove.forEach(key -> animals.remove(key));
+
+//        for (AnimalType key : keysToRemove) {
+//            animals.remove(key);
+//        }
+
     }
 
     private void showMapOfAnimals() {
