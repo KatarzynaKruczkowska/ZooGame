@@ -74,19 +74,16 @@ public class GameManager {
         for (AnimalType animalType : animals.keySet()) {
             final List<Animal> animalsList = animals.get(animalType);
             ioManager.showMessage(animalType.typeName);
-            for (int i = 0; i < animalsList.size(); i++) {
-                counter += 1;
-                ioManager.showMessage(counter + " " + animalsList.get(i).toString());
+            for (final Animal anAnimalsList : animalsList) {
+                ioManager.showMessage(++counter + " " + anAnimalsList.toString());
             }
         }
     }
 
-    private void showListOfAnimals(List list) {
+    private void showListOfAnimals(final List list) {
         ioManager.showMessage(SORTED_LIST_OF_ANIMALS);
-        int counter = 0;
         for (int i = 0; i < list.size(); i++) {
-            counter += 1;
-            ioManager.showMessage(counter + " " + list.get(i).toString());
+            ioManager.showMessage((i + 1) + " " + list.get(i).toString());
         }
     }
 
