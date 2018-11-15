@@ -8,6 +8,11 @@ public class Tiger extends Animal {
         super(animalType);
     }
 
+    public Tiger(final AnimalType animalType, final int age) {
+        super(animalType);
+        setAge(age);
+    }
+
     @Override
     public String getSound() {
         return TIGER_SOUND;

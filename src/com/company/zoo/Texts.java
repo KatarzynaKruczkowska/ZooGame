@@ -26,12 +26,18 @@ public class Texts {
     public static final String MALE = "samiec";
     public static final String ELEPHANT_SOUND = "głębokie chrząkanie jako stała forma komunikacji, " +
             "trąbienie, gdy jest zdenerwowany";
+    public static final String ELEPHANT_EATING_SOUND = "mlask mlask";
     public static final String SNAKE_SOUND = "wąż jest głuchy, więc trudno go tresować, ale syczy gdy jest zdenerwowany";
+    public static final String SNAKE_EATING_SOUND = "ssss ssss";
     public static final String DOG_SOUND = "szczeka";
     public static final String FISH_SOUND = "nie wydaje dźwięków";
+    public static final String FISH_EATING_SOUND = "bul bul bulk";
     public static final String OCTOPUS_SOUND = "nie wydaje dźwięków, ale pluska mackami";
+    public static final String OCTOPUS_EATING_SOUND = "plusk plusk";
     public static final String STORK_SOUND = "klekocze";
+    public static final String STORK_EATING_SOUND = "dziób kle kle";
     public static final String OSTRICH_SOUND = "normalnie nie wydaje dźwięków, zagrożony wydyma szyję i pohukuje";
+    public static final String OSTRICH_EATING_SOUND = "dziób dziób";
     public static final String TIGER_SOUND = "głośno ryczy";
     public static final String ELEPHANT_NAME = "Słoń afrykański";
     public static final String SNAKE_NAME = "Wąż Boa dusiciel";
@@ -61,7 +67,8 @@ public class Texts {
     public static final String EATING = "je smaczny posiłek";
     public static final String WALKING = "idzie na spacer";
     public static final String PLAYING = "bawi się";
-    public static final String SUNSET_TXT = "Podsumowanie dnia";
-    public static final String ANIMAL_TYPE_REMOVAL = "Nie ma już zwirząt tego gatunku w Zoo";
+    public static final String END_OF_THE_DAY_TXT = "Podsumowanie dnia";
+    public static final String ANIMAL_TYPE_REMOVAL = "Nie ma już zwierząt tego gatunku w Zoo";
     public static final String CURRENT_STATUS = "Aktualny stan Zoo";
+    public static final String EATING_SOUND_TXT = "mniam mniam";
 }

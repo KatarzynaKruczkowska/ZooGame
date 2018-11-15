@@ -1,5 +1,6 @@
 package com.company.zoo;
 
+import static com.company.zoo.Texts.SNAKE_EATING_SOUND;
 import static com.company.zoo.Texts.SNAKE_SOUND;
 
 public class Snake extends Animal {
@@ -8,8 +9,18 @@ public class Snake extends Animal {
         super(animalType);
     }
 
+    public Snake(final AnimalType animalType, final int age) {
+        super(animalType);
+        setAge(age);
+    }
+
     @Override
     public String getSound() {
         return SNAKE_SOUND;
+    }
+
+    @Override
+    public String getEatingSound() {
+        return SNAKE_EATING_SOUND;
     }
 }

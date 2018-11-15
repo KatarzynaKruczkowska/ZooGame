@@ -8,9 +8,18 @@ public class Fish extends Animal {
         super(animalType);
 
     }
+    public Fish(final AnimalType animalType, final int age) {
+        super(animalType);
+        setAge(age);
+    }
 
     @Override
     public String getSound() {
         return FISH_SOUND;
+    }
+
+    @Override
+    public String getEatingSound() {
+        return FISH_EATING_SOUND;
     }
 }

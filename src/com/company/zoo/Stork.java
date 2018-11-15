@@ -8,8 +8,18 @@ public class Stork extends Animal {
         super(animalType);
     }
 
+    public Stork(final AnimalType animalType, final int age) {
+        super(animalType);
+        setAge(age);
+    }
+
     @Override
     public String getSound() {
         return STORK_SOUND;
+    }
+
+    @Override
+    public String getEatingSound() {
+        return STORK_EATING_SOUND;
     }
 }

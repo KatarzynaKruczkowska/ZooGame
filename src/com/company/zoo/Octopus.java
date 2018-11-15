@@ -1,5 +1,6 @@
 package com.company.zoo;
 
+import static com.company.zoo.Texts.OCTOPUS_EATING_SOUND;
 import static com.company.zoo.Texts.OCTOPUS_SOUND;
 
 public class Octopus extends Animal {
@@ -15,9 +16,20 @@ public class Octopus extends Animal {
         this.tentaclesAmount = tentaclesAmount;
     }
 
+    public Octopus(final AnimalType animalType, final int tentaclesAmount, final int age) {
+        super(animalType);
+        this.tentaclesAmount = tentaclesAmount;
+        setAge(age);
+    }
+
     @Override
     public String getSound() {
         return OCTOPUS_SOUND;
+    }
+
+    @Override
+    public String getEatingSound() {
+        return OCTOPUS_EATING_SOUND;
     }
 
     public int getTentaclesAmount() {

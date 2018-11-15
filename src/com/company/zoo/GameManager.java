@@ -10,6 +10,8 @@ public class GameManager {
     private final IOManager ioManager;
     private static final int MIN_NUMBER_OF_ANIMALS = 3;
     private static final int MAX_NUMBER_OF_ANIMALS = 10;
+    private static final int MIN_NUMBER_OF_TYPES = 2;
+    private static final int MIN_DAYS_WITHOUT_TRAINING = 2;
     private boolean endOfTheGame = false;
 
     final Random random = new Random();
@@ -20,61 +22,69 @@ public class GameManager {
     }
 
     public void play() {
-        do {
-            int startNumberOfAnimals = getRandomNumber(MIN_NUMBER_OF_ANIMALS, MAX_NUMBER_OF_ANIMALS);
-
-            animals = initPopulation(startNumberOfAnimals);
-            showMapOfAnimals();
-            playGame(animals);
-            ioManager.showMessage(END_OF_THE_GAME);
-        } while (endOfTheGame);
+        int startNumberOfAnimals = getRandomNumber(MIN_NUMBER_OF_ANIMALS, MAX_NUMBER_OF_ANIMALS);
+        endOfTheGame = false;
+        animals = initPopulation(startNumberOfAnimals);
+        showMapOfAnimals();
+        playGame(animals);
+        ioManager.showMessage(END_OF_THE_GAME);
     }
 
     private void endOfTheDay() {
-        ioManager.showMessage(SUNSET_TXT);
+        ioManager.showMessage(END_OF_THE_DAY_TXT);
 
         final List<AnimalType> keysToRemove = new ArrayList<>();
 
         for (AnimalType animalType : animals.keySet()) {
             final List<Animal> animalsList = animals.get(animalType);
             ioManager.showMessage(animalType.typeName);
-            for (int i = 0; i < animalsList.size(); i++) {
-                Animal animal = animalsList.get(i);
-                animal.ageChange();
-                if (animal.getStarvingDays() < -1) {
-                    animal.weightLoss();
-                }
+
+            for (int i = animalsList.size(); i > 0; i--) {
+                final Animal animal = animalsList.get(i - 1);
+                animal.animalEndOfTheDay();
                 if (animal.isPregnant()) {
                     //długość trwania ciąży?
-                    animalsList.add(animalType.getNewAnimal());
-                    // powinno być a minimalną wagą i minimalnym wiekiem
-                    animal.changePregnantStatus();
+                    animal.setPregnantToFalse();
+                    animalsList.add(animalType.getNewAnimal(1));
+                    //animalsList.add(animalType.getNewAnimal());    //dodane na końcu czyli już po nim nie przejdzie(?)
                 }
-                if (animal.getWeight() < animalType.minWeight || animal.getAge() >= animalType.maxAge) {
-                    animalsList.remove(i);
-                    if (animalsList.isEmpty()) {
-                        keysToRemove.add(animalType);
-                        ioManager.showMessage(animalType.typeName);
-                        ioManager.showMessage(ANIMAL_TYPE_REMOVAL);
-                        break;
+                if (!animal.isAlive()) {
+                    animalsList.remove(animal);
+                }
+            }
+
+            final List<Animal> femaleAnimalList = new ArrayList<>();
+            final List<Animal> maleAnimalList = new ArrayList<>();
+            for (Animal animal : animalsList) {
+                if (animal.getSexType() == SexType.FEMALE && animal.getTrainingDays() <= MIN_DAYS_WITHOUT_TRAINING
+                        && animal.getAge() > animalType.maxAge / 10) {
+                    femaleAnimalList.add(animal);
+                }
+                if (animal.getSexType() == SexType.MALE && animal.getTrainingDays() <= MIN_DAYS_WITHOUT_TRAINING) {
+                    maleAnimalList.add(animal);
+                }
+            }
+            if (femaleAnimalList.size() > 0 && maleAnimalList.size() > 0) {
+                for (Animal animal : femaleAnimalList) {
+                    //animal.setPregnantToTrue() == random.nextBoolean(); ???
+                    if (random.nextBoolean()) {
+                        animal.setPregnantToTrue();
                     }
                 }
+            }
 
+            if (animalsList.isEmpty()) {
+                keysToRemove.add(animalType);
+                ioManager.showMessage(animalType.typeName + " " + ANIMAL_TYPE_REMOVAL);
             }
         }
+        keysToRemove.forEach(key -> animals.remove(key));
 
         ioManager.showMessage(CURRENT_STATUS);
         showMapOfAnimals();
-        if (animals.size() <= 2) {
+        if (animals.size() <= MIN_NUMBER_OF_TYPES) {
             endOfTheGame = true;
         }
-
-//        keysToRemove.forEach(key -> animals.remove(key));
-
-//        for (AnimalType key : keysToRemove) {
-//            animals.remove(key);
-//        }
-
     }
 
     private void showMapOfAnimals() {
@@ -82,7 +92,6 @@ public class GameManager {
         int counter = 0;
         for (AnimalType animalType : animals.keySet()) {
             final List<Animal> animalsList = animals.get(animalType);
-            ioManager.showMessage(animalType.typeName);
             for (final Animal anAnimalsList : animalsList) {
                 ioManager.showMessage(++counter + " " + anAnimalsList.toString());
             }
@@ -98,20 +107,26 @@ public class GameManager {
 
     private Map<AnimalType, List<Animal>> initPopulation(final int startNumberOfAnimals) {
         final Map<AnimalType, List<Animal>> animals = new HashMap<>();
-
-        for (int i = 0; i < startNumberOfAnimals; i++) {
-            final AnimalType animalType = AnimalType.values()[getRandomNumber(1, AnimalType.values().length) - 1];   //0-7
-            List<Animal> animalsList = animals.get(animalType);
-            if (animalsList == null) {
-                animalsList = new ArrayList<>();
-                animals.put(animalType, animalsList);
+        do {
+            if (!animals.isEmpty()) {
+                for (AnimalType animalType : animals.keySet()) {
+                    animals.remove(animalType);
+                }
             }
-            if (animalType == OCTOPUS) {
-                animalsList.add(new Octopus(OCTOPUS, 10));
-            } else {
-                animalsList.add(animalType.getNewAnimal());
+            for (int i = 0; i < startNumberOfAnimals; i++) {
+                final AnimalType animalType = AnimalType.values()[getRandomNumber(1, AnimalType.values().length) - 1];   //0-7
+                List<Animal> animalsList = animals.get(animalType);
+                if (animalsList == null) {
+                    animalsList = new ArrayList<>();
+                    animals.put(animalType, animalsList);
+                }
+                if (animalType == OCTOPUS) {
+                    animalsList.add(new Octopus(OCTOPUS, 10));
+                } else {
+                    animalsList.add(animalType.getNewAnimal());
+                }
             }
-        }
+        } while (animals.size() < MIN_NUMBER_OF_TYPES);
         return animals;
     }
 
@@ -130,10 +145,10 @@ public class GameManager {
                     endOfTheDay();
                     break;
                 case SORTING_BY_ENUM:
-                    sortingByEnum();
+                    sorting("ByEnum");
                     break;
                 case SORTING_BY_COMPARATOR:
-                    sortingByComparator();
+                    sorting("ByComparator");
                     break;
                 case FEEDING:
                     feeding();
@@ -146,13 +161,14 @@ public class GameManager {
                 case EXIT:
                     return;
             }
-        } while (true);
+        } while (!endOfTheGame);
     }
 
     private void walking() {
         final AnimalType animalType = ioManager.selectAnimalType(new ArrayList<>(animals.keySet()));
         for (Animal animal : animals.get(animalType)) {
             animal.walk();
+            animal.trainingLoss();
             ioManager.showMessage(animalType.typeName + " " + WALKING);
         }
     }
@@ -160,39 +176,35 @@ public class GameManager {
     private void feeding() {
 
         final AnimalType animalType = ioManager.selectAnimalType(new ArrayList<>(animals.keySet()));
+        ioManager.showMessage(animalType.typeName + " " + EATING);
         for (Animal animal : animals.get(animalType)) {
             animal.eat();
-            ioManager.showMessage(animalType.typeName + " " + EATING);
+            animal.trainingLoss();
+            ioManager.showMessage(animal.getEatingSound());
         }
     }
 
-    private void sortingByComparator() {
-        AnimalComparator comparator = new AnimalComparator();
-        SortMenuType sortType = ioManager.chooseFromSortByMenu();
-        ioManager.showMessage(sortType.menuSortBy);
-        final List<Animal> sortedAllAnimalsList = new ArrayList<>();
-        comparator.setSortBy(sortType);
-        for (AnimalType animalType : animals.keySet()) {
-            final List<Animal> animalsList = animals.get(animalType);
-            Collections.sort(animalsList, comparator);
-            sortedAllAnimalsList.addAll(animalsList);
-        }
-        showMapOfAnimals();
-        Collections.sort(sortedAllAnimalsList, comparator);
-        showListOfAnimals(sortedAllAnimalsList);
-    }
+    private void sorting(String sortingType) {
 
-    private void sortingByEnum() {
         SortMenuType sortType = ioManager.chooseFromSortByMenu();
         ioManager.showMessage(sortType.menuSortBy);
         final List<Animal> sortedAllAnimalsList = new ArrayList<>();
+
+        //czy istniele możliwość dodania wszystkich wartości mapy do listy?
+        //nie udało mi sie
+        //sortedAllAnimalsList.addAll(animals.values());
+
         for (AnimalType animalType : animals.keySet()) {
             final List<Animal> animalsList = animals.get(animalType);
-            Collections.sort(animalsList, sortType);
             sortedAllAnimalsList.addAll(animalsList);
         }
-        showMapOfAnimals();
-        Collections.sort(sortedAllAnimalsList, sortType);
+        if (sortingType == "ByEnum") {
+            Collections.sort(sortedAllAnimalsList, sortType);
+        } else if (sortingType == "ByComparator") {
+            AnimalComparator comparator = new AnimalComparator();
+            comparator.setSortBy(sortType);
+            Collections.sort(sortedAllAnimalsList, comparator);
+        }
         showListOfAnimals(sortedAllAnimalsList);
     }
 
@@ -202,9 +214,9 @@ public class GameManager {
         final Animal firstAnimal = animals.get(animalType).get(0);
         ioManager.showMessage(firstAnimal.getName());
         ioManager.showMessage(firstAnimal.getSound());
-        //każde zwierzę musi być zmodyfikowane (inf że była zabawa)
+        //każde zwierzę musi być zmodyfikowane (inf że była zabawa=training)
         for (Animal animal : animals.get(animalType)) {
-            animal.fun();
+            animal.trainingIncrease();
             ioManager.showMessage(animalType.typeName + " " + PLAYING);
         }
     }

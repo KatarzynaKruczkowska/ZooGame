@@ -8,6 +8,7 @@ import static java.lang.String.format;
 public abstract class Animal implements Comparable<Animal> {
 
     final Random random = new Random();
+    public final int factor = 10;
 
     private final AnimalType animalType;
     private final SexType sex;
@@ -15,8 +16,10 @@ public abstract class Animal implements Comparable<Animal> {
     private float weight;
     private boolean pregnant;
     private int starvingDays = 0;
-    private int funDays = 0;
+    private int trainingDays = 0;
     private int walkingDays = 0;
+    private boolean isAlive = true;
+    private String sound = EATING_SOUND_TXT;
 
     private static final String FORMATTED_LIST_OF_ANIMALS = "id=%d %-25s %s %-7s | %s %3d lat | %s %7.2f kg | %s %b";
 
@@ -29,28 +32,53 @@ public abstract class Animal implements Comparable<Animal> {
         this.weight = getRandomWeight(animalType.minWeight, animalType.maxWeight);
 //        this.pregnant = sex == SexType.FEMALE ? random.nextBoolean() : false; //operator tenarny
         this.pregnant = sex == SexType.FEMALE && random.nextBoolean();          // to samo co wyzej
-
     }
 
-    public void changePregnantStatus() {
+    public void animalEndOfTheDay() {
+        ageIncrease();
+        if (getStarvingDays() < -1) {
+            weightLoss();
+        }
+        if (getWeight() < animalType.minWeight || getAge() >= animalType.maxAge) {
+            isAlive = false;
+        }
+    }
+
+    public void setPregnantToFalse() {
         pregnant = false;
     }
 
+    public void setPregnantToTrue() {
+        pregnant = true;
+    }
+
+    public void setAge(int age){
+        this.age = age;
+    }
+
     public void eat() {
-        weight += 1;
+        weight += 1*animalType.maxWeight/factor;
         starvingDays = -1;
     }
 
-    public void ageChange() {
-        age += 1;
+    public boolean isAlive() {
+        return isAlive;
     }
+
+    public void ageIncrease() {
+        age += 1*animalType.maxAge/factor;
+    }   //operacja na int niewiele daje
 
     public void weightLoss() {
-        weight -= 1;
+        weight -= 1*animalType.maxWeight/factor;
     }
 
-    public void fun() {  //training
-        funDays += 1;
+    public void trainingIncrease() {  //training
+        trainingDays += 1;
+    }
+
+    public void trainingLoss() {
+        trainingDays -= 1;
     }
 
     public void walk() {
@@ -95,6 +123,10 @@ public abstract class Animal implements Comparable<Animal> {
 
     public abstract String getSound();
 
+    public String getEatingSound() {
+        return EATING_SOUND_TXT;
+    }
+
     @Override
     public String toString() {
 
@@ -112,4 +144,8 @@ public abstract class Animal implements Comparable<Animal> {
         return this.animalType.compareTo(animal.animalType);
     }
 
+
+    public int getTrainingDays() {
+        return trainingDays;
+    }
 }
