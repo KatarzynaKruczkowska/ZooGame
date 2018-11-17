@@ -26,7 +26,6 @@ public class Texts {
     public static final String MALE = "samiec";
     public static final String ELEPHANT_SOUND = "głębokie chrząkanie jako stała forma komunikacji, " +
             "trąbienie, gdy jest zdenerwowany";
-    public static final String ELEPHANT_EATING_SOUND = "mlask mlask";
     public static final String SNAKE_SOUND = "wąż jest głuchy, więc trudno go tresować, ale syczy gdy jest zdenerwowany";
     public static final String SNAKE_EATING_SOUND = "ssss ssss";
     public static final String DOG_SOUND = "szczeka";

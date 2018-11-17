@@ -1,5 +1,7 @@
 package com.company.zoo;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import static com.company.zoo.Texts.*;
@@ -7,7 +9,7 @@ import static java.lang.String.format;
 
 public abstract class Animal implements Comparable<Animal> {
 
-    final Random random = new Random();
+    private static final Random random = new Random();
     public final int factor = 10;
 
     private final AnimalType animalType;
@@ -20,15 +22,19 @@ public abstract class Animal implements Comparable<Animal> {
     private int walkingDays = 0;
     private boolean isAlive = true;
     private String sound = EATING_SOUND_TXT;
+    private List<Animal> childs = new ArrayList<>();
 
     private static final String FORMATTED_LIST_OF_ANIMALS = "id=%d %-25s %s %-7s | %s %3d lat | %s %7.2f kg | %s %b";
 
 
     public Animal(final AnimalType animalType) {
+        this(animalType, getRandomNumber(1, animalType.maxAge));
+    }
 
+    protected Animal(final AnimalType animalType, final int age) {
         this.animalType = animalType;
         this.sex = getRandomSex();
-        this.age = getRandomNumber(1, animalType.maxAge);
+        this.age = age;
         this.weight = getRandomWeight(animalType.minWeight, animalType.maxWeight);
 //        this.pregnant = sex == SexType.FEMALE ? random.nextBoolean() : false; //operator tenarny
         this.pregnant = sex == SexType.FEMALE && random.nextBoolean();          // to samo co wyzej
@@ -52,13 +58,14 @@ public abstract class Animal implements Comparable<Animal> {
         pregnant = true;
     }
 
-    public void setAge(int age){
+    public void setAge(int age) {
         this.age = age;
     }
 
-    public void eat() {
-        weight += 1*animalType.maxWeight/factor;
+    public String eat() {
+        weight += 1 * animalType.maxWeight / factor;
         starvingDays = -1;
+        return getEatingSound();
     }
 
     public boolean isAlive() {
@@ -66,11 +73,11 @@ public abstract class Animal implements Comparable<Animal> {
     }
 
     public void ageIncrease() {
-        age += 1*animalType.maxAge/factor;
+        age += 1 * animalType.maxAge / factor;
     }   //operacja na int niewiele daje
 
     public void weightLoss() {
-        weight -= 1*animalType.maxWeight/factor;
+        weight -= 1 * animalType.maxWeight / factor;
     }
 
     public void trainingIncrease() {  //training
@@ -93,7 +100,7 @@ public abstract class Animal implements Comparable<Animal> {
         return SexType.values()[random.nextInt(SexType.values().length)];
     }
 
-    private int getRandomNumber(final int min, final int max) {
+    private static int getRandomNumber(final int min, final int max) {
         return random.nextInt(max + 1 - min) + min; //tak musi być żeby zakres był zachowany
     }
 
@@ -123,7 +130,7 @@ public abstract class Animal implements Comparable<Animal> {
 
     public abstract String getSound();
 
-    public String getEatingSound() {
+    protected String getEatingSound() {
         return EATING_SOUND_TXT;
     }
 

@@ -8,9 +8,8 @@ public class Dog extends Animal {
         super(animalType);
     }
 
-    public Dog(final AnimalType animalType, final int age) {
-        super(animalType);
-        setAge(age);
+    private Dog(final AnimalType animalType, final int age) {
+        super(animalType, age);
     }
 
     @Override

@@ -39,8 +39,8 @@ public class GameManager {
             final List<Animal> animalsList = animals.get(animalType);
             ioManager.showMessage(animalType.typeName);
 
-            for (int i = animalsList.size(); i > 0; i--) {
-                final Animal animal = animalsList.get(i - 1);
+            for (int i = animalsList.size()-1; i >= 0; i--) {
+                final Animal animal = animalsList.get(i);
                 animal.animalEndOfTheDay();
                 if (animal.isPregnant()) {
                     //długość trwania ciąży?
@@ -108,11 +108,7 @@ public class GameManager {
     private Map<AnimalType, List<Animal>> initPopulation(final int startNumberOfAnimals) {
         final Map<AnimalType, List<Animal>> animals = new HashMap<>();
         do {
-            if (!animals.isEmpty()) {
-                for (AnimalType animalType : animals.keySet()) {
-                    animals.remove(animalType);
-                }
-            }
+            animals.clear();
             for (int i = 0; i < startNumberOfAnimals; i++) {
                 final AnimalType animalType = AnimalType.values()[getRandomNumber(1, AnimalType.values().length) - 1];   //0-7
                 List<Animal> animalsList = animals.get(animalType);
@@ -178,9 +174,9 @@ public class GameManager {
         final AnimalType animalType = ioManager.selectAnimalType(new ArrayList<>(animals.keySet()));
         ioManager.showMessage(animalType.typeName + " " + EATING);
         for (Animal animal : animals.get(animalType)) {
-            animal.eat();
+            ioManager.showMessage(animal.eat());
             animal.trainingLoss();
-            ioManager.showMessage(animal.getEatingSound());
+//            ioManager.showMessage(animal.getEatingSound());
         }
     }
 
@@ -195,17 +191,24 @@ public class GameManager {
         //sortedAllAnimalsList.addAll(animals.values());
 
         for (AnimalType animalType : animals.keySet()) {
-            final List<Animal> animalsList = animals.get(animalType);
-            sortedAllAnimalsList.addAll(animalsList);
+            sortedAllAnimalsList.addAll(animals.get(animalType));
         }
-        if (sortingType == "ByEnum") {
-            Collections.sort(sortedAllAnimalsList, sortType);
-        } else if (sortingType == "ByComparator") {
+        if (sortingType.equals("ByEnum")) {
+            sortedAllAnimalsList.sort(sortType);
+        } else if (sortingType == "ByComparator") { //<-- użyj equals!!!!!
             AnimalComparator comparator = new AnimalComparator();
             comparator.setSortBy(sortType);
-            Collections.sort(sortedAllAnimalsList, comparator);
+            sortedAllAnimalsList.sort(comparator);
         }
         showListOfAnimals(sortedAllAnimalsList);
+
+//        String a = "a";
+//        String b = "a";
+//        String c = new String("a");
+//
+//        a==b; true
+//        a==c; false
+
     }
 
     private void training() {
