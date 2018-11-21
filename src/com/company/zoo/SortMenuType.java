@@ -62,7 +62,7 @@ public enum SortMenuType implements Comparator<Animal> {
     SORT_BY_PREGNANT(SORT_BY_PREGNANT_TXT) {
         @Override
         public int compare(Animal o1, Animal o2) {
-            return Boolean.compare(o1.isPregnant(), o2.isPregnant());
+            return Integer.compare(o1.getPregnantDays(), o2.getPregnantDays());
         }
     };
 

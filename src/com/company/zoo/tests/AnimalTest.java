@@ -19,6 +19,6 @@ class AnimalTest {
 
     @Test
     void animalEndOfTheDay() {
-        final Dog dog = new Dog();
+       // final Dog dog = new Dog();
     }
 }

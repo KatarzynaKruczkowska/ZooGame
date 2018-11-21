@@ -39,14 +39,11 @@ public class GameManager {
             final List<Animal> animalsList = animals.get(animalType);
             ioManager.showMessage(animalType.typeName);
 
-            for (int i = animalsList.size()-1; i >= 0; i--) {
+            for (int i = animalsList.size() - 1; i >= 0; i--) {
                 final Animal animal = animalsList.get(i);
                 animal.animalEndOfTheDay();
-                if (animal.isPregnant()) {
-                    //długość trwania ciąży?
-                    animal.setPregnantToFalse();
-                    animalsList.add(animalType.getNewAnimal(1));
-                    //animalsList.add(animalType.getNewAnimal());    //dodane na końcu czyli już po nim nie przejdzie(?)
+                if (animal.getNumberOfChild() > 0) {
+                    animalsList.addAll(animal.childTransfer());
                 }
                 if (!animal.isAlive()) {
                     animalsList.remove(animal);
@@ -66,9 +63,8 @@ public class GameManager {
             }
             if (femaleAnimalList.size() > 0 && maleAnimalList.size() > 0) {
                 for (Animal animal : femaleAnimalList) {
-                    //animal.setPregnantToTrue() == random.nextBoolean(); ???
                     if (random.nextBoolean()) {
-                        animal.setPregnantToTrue();
+                        animal.pregnantDaysIncrease();
                     }
                 }
             }
