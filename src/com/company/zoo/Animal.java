@@ -12,7 +12,7 @@ public abstract class Animal implements Comparable<Animal> {
     private static final Random random = new Random();
     public final int factor = 10;
 
-    private final AnimalType animalType;
+    protected final AnimalType animalType;
     private final SexType sex;
     private int age; //age in years? days? rounds?
     private float weight;
@@ -56,7 +56,7 @@ public abstract class Animal implements Comparable<Animal> {
             if (pregnantDays > this.animalType.maxPregnantDays / factor) {
                 final int numberOfChildren = getRandomNumber(1, this.animalType.maxCountOfChild);
                 for (int i = 1; i < numberOfChildren; i++) {
-                    childs.add(animalType.getNewAnimal());
+                    childs.add(bornChild());
                 }
             }
         }
@@ -64,6 +64,8 @@ public abstract class Animal implements Comparable<Animal> {
             isAlive = false;
         }
     }
+
+    protected abstract Animal bornChild();
 
     public int getPregnantDays(){
         return pregnantDays;

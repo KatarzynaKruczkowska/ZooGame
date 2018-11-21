@@ -13,6 +13,11 @@ public class Dog extends Animal {
     }
 
     @Override
+    protected Animal bornChild() {
+        return new Dog(animalType, 1);
+    }
+
+    @Override
     public String getSound() {
         return DOG_SOUND;
     }
