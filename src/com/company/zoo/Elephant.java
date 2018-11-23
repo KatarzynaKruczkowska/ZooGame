@@ -15,6 +15,11 @@ public class Elephant extends Animal {
     }
 
     @Override
+    protected Animal bornChildren() {
+        return new Elephant(animalType, 0);
+    }
+
+    @Override
     public String getSound() {
         return ELEPHANT_SOUND;
     }

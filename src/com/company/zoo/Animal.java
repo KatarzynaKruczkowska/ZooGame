@@ -10,7 +10,7 @@ import static java.lang.String.format;
 public abstract class Animal implements Comparable<Animal> {
 
     private static final Random random = new Random();
-    public final int factor = 10;
+    private final int factor = 5;
 
     protected final AnimalType animalType;
     private final SexType sex;
@@ -22,7 +22,10 @@ public abstract class Animal implements Comparable<Animal> {
     private int walkingDays = 0;
     private boolean isAlive = true;
     private String sound = EATING_SOUND_TXT;
-    private List<Animal> childs = new ArrayList<>();
+    private List<Animal> children = new ArrayList<>();
+    private float maxWeightFactor;
+    private int maxPregnantDaysFactor;
+    private int maxAgeFactor;
 
     private static final String FORMATTED_LIST_OF_ANIMALS = "id=%d %-25s %s %-7s | %s %3d lat | %s %7.2f kg | %s %b";
 
@@ -43,20 +46,24 @@ public abstract class Animal implements Comparable<Animal> {
         if (sex == SexType.FEMALE && random.nextBoolean() && age > 1) {
             this.pregnantDays = getRandomNumber(1, this.animalType.maxPregnantDays);
         }
+        this.maxWeightFactor = animalType.maxWeight / factor;
+        this.maxPregnantDaysFactor = animalType.maxPregnantDays / factor;
+        this.maxAgeFactor = animalType.maxAge / factor;
+
     }
 
     public void animalEndOfTheDay() {
-        ageIncrease();
-        if (getStarvingDays() > 0) {    //to daje dwa dni głodowania bez straty wagi
-            weightLoss();
+        age += maxAgeFactor;
+        if (starvingDays > 0) {    //to daje dwa dni głodowania bez straty wagi
+            weight -= maxWeightFactor;
         }
         starvingDaysIncrease();
         if (sex == SexType.FEMALE && pregnantDays > 0) {
-            pregnantDaysIncrease();
-            if (pregnantDays > this.animalType.maxPregnantDays / factor) {
-                final int numberOfChildren = getRandomNumber(1, this.animalType.maxCountOfChild);
-                for (int i = 1; i < numberOfChildren; i++) {
-                    childs.add(bornChild());
+            pregnantDays += maxPregnantDaysFactor;
+            if (pregnantDays > maxPregnantDaysFactor) {
+                final int numberOfChildren = getRandomNumber(1, animalType.maxCountOfChild);
+                for (int i = 0; i < numberOfChildren; i++) {
+                    children.add(bornChildren());
                 }
             }
         }
@@ -65,20 +72,18 @@ public abstract class Animal implements Comparable<Animal> {
         }
     }
 
-    protected abstract Animal bornChild();
+    protected abstract Animal bornChildren();
 
-    public int getPregnantDays(){
+    public int getPregnantDays() {
         return pregnantDays;
-    }
-
-    public int getNumberOfChild() {
-        return childs.size();
     }
 
     public List<Animal> childTransfer() {
         final List<Animal> transfer = new ArrayList<>();
-        transfer.addAll(childs);
-        childs.clear();
+        if (children.size() > 0) {
+            transfer.addAll(children);
+            children.clear();
+        }
         return transfer;
     }
 
@@ -92,25 +97,13 @@ public abstract class Animal implements Comparable<Animal> {
     }
 
     public String eat() {
-        weight += animalType.maxWeight / factor;
+        weight += maxWeightFactor;
         starvingDays = -1;
         return getEatingSound();
     }
 
     public boolean isAlive() {
         return isAlive;
-    }
-
-    public void pregnantDaysIncrease() {
-        pregnantDays += animalType.maxPregnantDays / factor;
-    }
-
-    public void ageIncrease() {
-        age += animalType.maxAge / factor;
-    }   //operacja na int niewiele daje
-
-    public void weightLoss() {
-        weight -= animalType.maxWeight / factor;
     }
 
     public void trainingIncrease() {  //training
@@ -123,10 +116,6 @@ public abstract class Animal implements Comparable<Animal> {
 
     public void walk() {
         walkingDays += 1;
-    }
-
-    public int getStarvingDays() {
-        return starvingDays;
     }
 
     private SexType getRandomSex() {
@@ -157,8 +146,8 @@ public abstract class Animal implements Comparable<Animal> {
         return weight;
     }
 
-    public int isPregnant() {
-        return pregnantDays;
+    public boolean isPregnant() {
+        return pregnantDays > 0;
     }
 
     public abstract String getSound();
@@ -187,5 +176,13 @@ public abstract class Animal implements Comparable<Animal> {
 
     public int getTrainingDays() {
         return trainingDays;
+    }
+
+    public void setPregnantDays() {
+        pregnantDays = 1;
+    }
+
+    public int getMaxAgeFactor() {
+        return maxAgeFactor;
     }
 }

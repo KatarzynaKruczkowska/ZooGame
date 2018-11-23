@@ -13,8 +13,8 @@ public class Dog extends Animal {
     }
 
     @Override
-    protected Animal bornChild() {
-        return new Dog(animalType, 1);
+    protected Animal bornChildren() {
+        return new Dog(animalType, 0);
     }
 
     @Override

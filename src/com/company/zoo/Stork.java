@@ -14,6 +14,11 @@ public class Stork extends Animal {
     }
 
     @Override
+    protected Animal bornChildren() {
+        return new Stork(animalType, 0);
+    }
+
+    @Override
     public String getSound() {
         return STORK_SOUND;
     }

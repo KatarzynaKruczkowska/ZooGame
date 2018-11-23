@@ -42,9 +42,7 @@ public class GameManager {
             for (int i = animalsList.size() - 1; i >= 0; i--) {
                 final Animal animal = animalsList.get(i);
                 animal.animalEndOfTheDay();
-                if (animal.getNumberOfChild() > 0) {
-                    animalsList.addAll(animal.childTransfer());
-                }
+                animalsList.addAll(animal.childTransfer());
                 if (!animal.isAlive()) {
                     animalsList.remove(animal);
                 }
@@ -54,7 +52,7 @@ public class GameManager {
             final List<Animal> maleAnimalList = new ArrayList<>();
             for (Animal animal : animalsList) {
                 if (animal.getSexType() == SexType.FEMALE && animal.getTrainingDays() <= MIN_DAYS_WITHOUT_TRAINING
-                        && animal.getAge() > animalType.maxAge / 10) {
+                        && animal.getAge() > animal.getMaxAgeFactor()) {
                     femaleAnimalList.add(animal);
                 }
                 if (animal.getSexType() == SexType.MALE && animal.getTrainingDays() <= MIN_DAYS_WITHOUT_TRAINING) {
@@ -64,7 +62,7 @@ public class GameManager {
             if (femaleAnimalList.size() > 0 && maleAnimalList.size() > 0) {
                 for (Animal animal : femaleAnimalList) {
                     if (random.nextBoolean()) {
-                        animal.pregnantDaysIncrease();
+                        animal.setPregnantDays();       //= 1
                     }
                 }
             }

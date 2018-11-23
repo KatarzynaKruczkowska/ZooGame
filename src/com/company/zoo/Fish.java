@@ -14,6 +14,11 @@ public class Fish extends Animal {
     }
 
     @Override
+    protected Animal bornChildren() {
+        return new Fish(animalType, 0);
+    }
+
+    @Override
     public String getSound() {
         return FISH_SOUND;
     }

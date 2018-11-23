@@ -14,6 +14,11 @@ public class Ostrich extends Animal {
     }
 
     @Override
+    protected Animal bornChildren() {
+        return new Ostrich(animalType, 0);
+    }
+
+    @Override
     public String getSound() {
         return OSTRICH_SOUND;
     }

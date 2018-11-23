@@ -14,6 +14,11 @@ public class Tiger extends Animal {
     }
 
     @Override
+    protected Animal bornChildren() {
+        return new Tiger(animalType, 0);
+    }
+
+    @Override
     public String getSound() {
         return TIGER_SOUND;
     }

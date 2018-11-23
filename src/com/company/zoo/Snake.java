@@ -15,6 +15,11 @@ public class Snake extends Animal {
     }
 
     @Override
+    protected Animal bornChildren() {
+        return new Snake(animalType, 0);
+    }
+
+    @Override
     public String getSound() {
         return SNAKE_SOUND;
     }

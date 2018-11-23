@@ -11,6 +11,11 @@ public class Octopus extends Animal {
         super(animalType);
     }
 
+    @Override
+    protected Animal bornChildren() {
+        return new Octopus(animalType, 9, 0);
+    }
+
     public Octopus(final AnimalType animalType, final int tentaclesAmount) {
         super(animalType);
         this.tentaclesAmount = tentaclesAmount;
