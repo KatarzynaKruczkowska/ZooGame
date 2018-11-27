@@ -3,6 +3,8 @@ package com.company.zoo;
 import java.util.*;
 
 import static com.company.zoo.AnimalType.OCTOPUS;
+import static com.company.zoo.SortingMethodsType.BY_COMPARATOR;
+import static com.company.zoo.SortingMethodsType.BY_ENUM;
 import static com.company.zoo.Texts.*;
 
 public class GameManager {
@@ -39,37 +41,14 @@ public class GameManager {
         for (AnimalType animalType : animals.keySet()) {
             final List<Animal> animalsList = animals.get(animalType);
             ioManager.showMessage(animalType.typeName);
+            boolean canBePregnant = hasAnyCouple(animalsList);
 
             for (int i = animalsList.size() - 1; i >= 0; i--) {
                 final Animal animal = animalsList.get(i);
-                animal.animalEndOfTheDay();
+                animal.animalEndOfTheDay(canBePregnant);
                 animalsList.addAll(animal.childTransfer());
                 if (!animal.isAlive()) {
                     animalsList.remove(animal);
-                }
-            }
-
-            final List<Animal> femaleAnimalList = new ArrayList<>();
-            final List<Animal> maleAnimalList = new ArrayList<>();
-            for (Animal animal : animalsList) {
-                if (animal.getSexType() == SexType.FEMALE
-                        && animal.getTrainingDays() <= MIN_DAYS_WITHOUT_TRAINING
-                        && animal.getWalkingDays() < MIN_DAYS_WITHOUT_WALKING
-                        && animal.getAge() > animal.getMaxAgeFactor()) {
-                    femaleAnimalList.add(animal);
-                }
-                if (animal.getSexType() == SexType.MALE
-                        && animal.getTrainingDays() <= MIN_DAYS_WITHOUT_TRAINING
-                        && animal.getWalkingDays() < MIN_DAYS_WITHOUT_WALKING
-                        && animal.getAge() > animal.getMaxAgeFactor()) {
-                    maleAnimalList.add(animal);
-                }
-            }
-            if (femaleAnimalList.size() > 0 && maleAnimalList.size() > 0) {
-                for (Animal animal : femaleAnimalList) {
-                    if (random.nextBoolean()) {
-                        animal.setPregnantDays();       //= 1
-                    }
                 }
             }
 
@@ -85,6 +64,39 @@ public class GameManager {
         if (animals.size() <= MIN_NUMBER_OF_TYPES) {
             endOfTheGame = true;
         }
+    }
+
+    private boolean hasAnyCouple(final List<Animal> animalsList) {
+//        return animalsList
+//                .stream()
+//                .filter(this::isPregnantCandidate)
+//                .map(Animal::getSexType)
+//                .distinct()
+//                .count() == 2;
+
+        boolean anyFemale = false;
+        boolean anyMale = false;
+        for (Animal animal : animalsList) {
+            if (!anyFemale
+                    && animal.getSexType() == SexType.FEMALE
+                    && isPregnantCandidate(animal)) {
+                anyFemale = true;
+            } else if (!anyMale
+                    && animal.getSexType() == SexType.MALE
+                    && isPregnantCandidate(animal)) {
+                anyMale = true;
+            }
+            if (anyFemale && anyMale) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean isPregnantCandidate(final Animal animal) {
+        return animal.getTrainingDays() <= MIN_DAYS_WITHOUT_TRAINING
+                && animal.getWalkingDays() < MIN_DAYS_WITHOUT_WALKING
+                && animal.getAge() > animal.getMaxAgeFactor();
     }
 
     private void showMapOfAnimals() {
@@ -141,10 +153,10 @@ public class GameManager {
                     endOfTheDay();
                     break;
                 case SORTING_BY_ENUM:
-                    sorting(SortingMethodsType.BY_ENUM.toString());
+                    sorting(BY_ENUM);
                     break;
                 case SORTING_BY_COMPARATOR:
-                    sorting(SortingMethodsType.BY_COMPARATOR.toString());
+                    sorting(BY_COMPARATOR);
                     break;
                 case FEEDING:
                     feeding();
@@ -164,7 +176,6 @@ public class GameManager {
         final AnimalType animalType = ioManager.selectAnimalType(new ArrayList<>(animals.keySet()));
         for (Animal animal : animals.get(animalType)) {
             animal.walk();
-            animal.trainingLoss();
             ioManager.showMessage(animalType.typeName + " " + WALKING);
         }
     }
@@ -175,12 +186,24 @@ public class GameManager {
         ioManager.showMessage(animalType.typeName + " " + EATING);
         for (Animal animal : animals.get(animalType)) {
             ioManager.showMessage(animal.eat());
-            animal.trainingLoss();
 //            ioManager.showMessage(animal.getEatingSound());
         }
     }
 
-    private void sorting(String sortingType) {
+    private void training() {
+        AnimalType animalType = ioManager.selectAnimalType(new ArrayList<>(animals.keySet()));
+
+        final Animal firstAnimal = animals.get(animalType).get(0);
+        ioManager.showMessage(firstAnimal.getName());
+        ioManager.showMessage(firstAnimal.getSound());
+        //każde zwierzę musi być zmodyfikowane (inf że była zabawa=training)
+        for (Animal animal : animals.get(animalType)) {
+            animal.train();
+            ioManager.showMessage(animalType.typeName + " " + PLAYING);
+        }
+    }
+
+    private void sorting(final SortingMethodsType sortingType) {
 
         SortMenuType sortType = ioManager.chooseFromSortByMenu();
         ioManager.showMessage(sortType.menuSortBy);
@@ -193,9 +216,9 @@ public class GameManager {
         for (AnimalType animalType : animals.keySet()) {
             sortedAllAnimalsList.addAll(animals.get(animalType));
         }
-        if (sortingType.equals(SortingMethodsType.BY_ENUM)) {
+        if (sortingType == BY_ENUM) {
             sortedAllAnimalsList.sort(sortType);
-        } else if (sortingType.equals(SortingMethodsType.BY_COMPARATOR)) { //<-- użyj equals!!!!!
+        } else if (sortingType == BY_COMPARATOR) {
             AnimalComparator comparator = new AnimalComparator();
             comparator.setSortBy(sortType);
             sortedAllAnimalsList.sort(comparator);
@@ -211,16 +234,4 @@ public class GameManager {
 
     }
 
-    private void training() {
-        AnimalType animalType = ioManager.selectAnimalType(new ArrayList<>(animals.keySet()));
-
-        final Animal firstAnimal = animals.get(animalType).get(0);
-        ioManager.showMessage(firstAnimal.getName());
-        ioManager.showMessage(firstAnimal.getSound());
-        //każde zwierzę musi być zmodyfikowane (inf że była zabawa=training)
-        for (Animal animal : animals.get(animalType)) {
-            animal.trainingIncrease();
-            ioManager.showMessage(animalType.typeName + " " + PLAYING);
-        }
-    }
 }

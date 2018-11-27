@@ -52,15 +52,15 @@ public abstract class Animal implements Comparable<Animal> {
 
     }
 
-    public void animalEndOfTheDay() {
+    public void animalEndOfTheDay(final boolean canBePregnant) {
         age += maxAgeFactor;
         walkingDays -= 1;
         if (starvingDays > 0) {    //to daje dwa dni głodowania bez straty wagi
             weight -= maxWeightFactor;
         }
-        starvingDaysIncrease();
-        if (sex == SexType.FEMALE && pregnantDays > 0) {
-            pregnantDays += maxPregnantDaysFactor;
+        starvingDays++;
+        if (sex == SexType.FEMALE && (pregnantDays > 0 || (canBePregnant && random.nextBoolean()))) {
+            pregnantDays++;
             if (pregnantDays > maxPregnantDaysFactor) {
                 final int numberOfChildren = getRandomNumber(1, animalType.maxCountOfChild);
                 for (int i = 0; i < numberOfChildren; i++) {
@@ -88,11 +88,6 @@ public abstract class Animal implements Comparable<Animal> {
         return transfer;
     }
 
-
-    private void starvingDaysIncrease() {
-        starvingDays += 1;
-    }
-
     public void setAge(int age) {
         this.age = age;
     }
@@ -100,6 +95,7 @@ public abstract class Animal implements Comparable<Animal> {
     public String eat() {
         weight += maxWeightFactor;
         starvingDays = -1;
+        trainingDays--;
         return getEatingSound();
     }
 
@@ -107,16 +103,13 @@ public abstract class Animal implements Comparable<Animal> {
         return isAlive;
     }
 
-    public void trainingIncrease() {  //training
-        trainingDays += 1;
-    }
-
-    public void trainingLoss() {
-        trainingDays -= 1;
+    public void train() {  //training
+        trainingDays++;
     }
 
     public void walk() {
-        walkingDays += 1;
+        walkingDays++;
+        trainingDays--;
     }
 
     private SexType getRandomSex() {
@@ -177,10 +170,6 @@ public abstract class Animal implements Comparable<Animal> {
 
     public int getTrainingDays() {
         return trainingDays;
-    }
-
-    public void setPregnantDays() {
-        pregnantDays = 1;
     }
 
     public int getMaxAgeFactor() {

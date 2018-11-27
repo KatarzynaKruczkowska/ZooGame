@@ -53,8 +53,8 @@ public class AnimalComparator implements Comparator<Animal> {
     }
 
     private int comparePregnant(Animal o1, Animal o2) {
-        if (o1 == null || o1.isPregnant() == false & o2.isPregnant() == true) return 1;
-        if (o2 == null || o1.isPregnant() == true & o2.isPregnant() == false) return -1;
+        if (o1 == null || (!o1.isPregnant() && o2.isPregnant())) return 1;
+        if (o2 == null || (o1.isPregnant() && !o2.isPregnant())) return -1;
         return 0;
     }
 
