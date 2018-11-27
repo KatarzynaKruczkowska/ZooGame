@@ -54,6 +54,7 @@ public abstract class Animal implements Comparable<Animal> {
 
     public void animalEndOfTheDay() {
         age += maxAgeFactor;
+        walkingDays -= 1;
         if (starvingDays > 0) {    //to daje dwa dni głodowania bez straty wagi
             weight -= maxWeightFactor;
         }
@@ -184,5 +185,9 @@ public abstract class Animal implements Comparable<Animal> {
 
     public int getMaxAgeFactor() {
         return maxAgeFactor;
+    }
+
+    public int getWalkingDays() {
+        return walkingDays;
     }
 }

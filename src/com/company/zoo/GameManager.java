@@ -12,6 +12,7 @@ public class GameManager {
     private static final int MAX_NUMBER_OF_ANIMALS = 10;
     private static final int MIN_NUMBER_OF_TYPES = 2;
     private static final int MIN_DAYS_WITHOUT_TRAINING = 2;
+    private static final int MIN_DAYS_WITHOUT_WALKING = 0;
     private boolean endOfTheGame = false;
 
     final Random random = new Random();
@@ -51,11 +52,16 @@ public class GameManager {
             final List<Animal> femaleAnimalList = new ArrayList<>();
             final List<Animal> maleAnimalList = new ArrayList<>();
             for (Animal animal : animalsList) {
-                if (animal.getSexType() == SexType.FEMALE && animal.getTrainingDays() <= MIN_DAYS_WITHOUT_TRAINING
+                if (animal.getSexType() == SexType.FEMALE
+                        && animal.getTrainingDays() <= MIN_DAYS_WITHOUT_TRAINING
+                        && animal.getWalkingDays() < MIN_DAYS_WITHOUT_WALKING
                         && animal.getAge() > animal.getMaxAgeFactor()) {
                     femaleAnimalList.add(animal);
                 }
-                if (animal.getSexType() == SexType.MALE && animal.getTrainingDays() <= MIN_DAYS_WITHOUT_TRAINING) {
+                if (animal.getSexType() == SexType.MALE
+                        && animal.getTrainingDays() <= MIN_DAYS_WITHOUT_TRAINING
+                        && animal.getWalkingDays() < MIN_DAYS_WITHOUT_WALKING
+                        && animal.getAge() > animal.getMaxAgeFactor()) {
                     maleAnimalList.add(animal);
                 }
             }
@@ -135,10 +141,10 @@ public class GameManager {
                     endOfTheDay();
                     break;
                 case SORTING_BY_ENUM:
-                    sorting("ByEnum");
+                    sorting(SortingMethodsType.BY_ENUM.toString());
                     break;
                 case SORTING_BY_COMPARATOR:
-                    sorting("ByComparator");
+                    sorting(SortingMethodsType.BY_COMPARATOR.toString());
                     break;
                 case FEEDING:
                     feeding();
@@ -187,9 +193,9 @@ public class GameManager {
         for (AnimalType animalType : animals.keySet()) {
             sortedAllAnimalsList.addAll(animals.get(animalType));
         }
-        if (sortingType.equals("ByEnum")) {
+        if (sortingType.equals(SortingMethodsType.BY_ENUM)) {
             sortedAllAnimalsList.sort(sortType);
-        } else if (sortingType == "ByComparator") { //<-- użyj equals!!!!!
+        } else if (sortingType.equals(SortingMethodsType.BY_COMPARATOR)) { //<-- użyj equals!!!!!
             AnimalComparator comparator = new AnimalComparator();
             comparator.setSortBy(sortType);
             sortedAllAnimalsList.sort(comparator);
